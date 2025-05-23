@@ -3,7 +3,7 @@ import { colors } from "./colors";
 
 export const GlobalStyle = createGlobalStyle`
   body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background-color: ${colors.lightGrey};
     color: ${colors.darkGrey};
     margin: 0;

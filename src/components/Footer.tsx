@@ -1,80 +1,95 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { colors } from "../assets/styles/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faXTwitter, faInstagram, faLinkedin, faWhatsapp} from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope, faPhone} from "@fortawesome/free-solid-svg-icons";
+import {
+  faFacebook,
+  faXTwitter,
+  faInstagram,
+  faLinkedin,
+  faWhatsapp,
+} from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "framer-motion";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { colors } from "../assets/styles/colors";
 
-const FooterContainer = styled.footer`
+const FooterWrapper = styled.footer`
   background: linear-gradient(135deg, ${colors.royalBlue}, ${colors.limeGreen});
   color: white;
-  padding: 60px 20px;
+  padding: 80px 30px;
   text-align: center;
-  border-radius: 10px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: "Montserrat", sans-serif;
 `;
 
-const FooterGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  max-width: 1000px;
+const FooterContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 250px;
+  max-width: 1200px;
   margin: auto;
-  text-align: center;
+  text-align: left;
 
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
   }
 `;
 
-const Column = styled.div`
-  padding: 20px;
+const LeftColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 `;
 
 const ContactFormContainer = styled.div`
-  text-align: center;
-  margin: 50px auto;
-  max-width: 600px;
+  flex: 1;
   padding: 30px;
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   border-radius: 12px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+`;
+
+const Title = styled.h3`
+  font-size: 24px;
+  margin-bottom: 20px;
 `;
 
 const ContactForm = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 15px;
 `;
 
 const Input = styled.input`
-  width: 100%;
+  width: 97%;
   padding: 12px;
-  margin-bottom: 12px;
   border-radius: 8px;
   border: 1px solid ${colors.limeGreen};
-  font-family: 'Poppins', sans-serif;
+  font-family: "Montserrat", sans-serif;
+  background: ${colors.white};
+  color: black;
+  outline: none;
 
   &::placeholder {
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.95rem;
     color: #ccc;
   }
 `;
 
 const TextArea = styled.textarea`
-  width: 100%;
+  width: 97%;
   padding: 12px;
-  margin-bottom: 12px;
   border-radius: 8px;
   border: 1px solid ${colors.limeGreen};
-  font-family: 'Poppins', sans-serif;
+  font-family: "Montserrat", sans-serif;
+  background: ${colors.white};
+  color: black;
+  outline: none;
 
   &::placeholder {
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.95rem;
     color: #ccc;
   }
 `;
@@ -96,9 +111,8 @@ const Button = styled.button`
 
 const SocialLinks = styled.div`
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 15px;
+  gap: 15px;
+  font-size: 30px;
 `;
 
 const SocialIcon = styled.a`
@@ -111,13 +125,19 @@ const SocialIcon = styled.a`
   }
 `;
 
+
+
+const Copyright = styled.p`
+  margin-top: 40px;
+  font-size: 14px;
+`;
+
 const Footer: React.FC = () => {
-  const [result, setResult] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setResult("Sending...");
-
+    setLoading(true);
     const formData = new FormData(e.target as HTMLFormElement);
     formData.append("access_key", "f13f50ed-8d44-4d5d-8257-1bbeb5160f66");
 
@@ -127,47 +147,31 @@ const Footer: React.FC = () => {
     });
 
     const data = await response.json();
+    setLoading(false);
     if (data.success) {
-      setResult("We have received your message!");
+      toast.success("Message sent successfully!");
       (e.target as HTMLFormElement).reset();
     } else {
-      setResult(data.message);
+      toast.error("Failed to send message. Try again.");
     }
   };
 
   return (
-    <FooterContainer>
-      
-      {/* Send Us a Message - Centered */}
-      <ContactFormContainer>
-        <h3>Talk to Us</h3>
-        <ContactForm onSubmit={handleSubmit}>
-          <Input type="text" name="name" placeholder="Your Name" required />
-          <Input type="email" name="email" placeholder="Your Email" required />
-          <TextArea name="message" placeholder="Your Message" required />
-          <Button type="submit">Send Message</Button>
-          <p>{result}</p>
-        </ContactForm>
-      </ContactFormContainer>
+    <FooterWrapper>
+      <ToastContainer />
+      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+        <FooterContent>
+          <LeftColumn>
+            <div>
+              <Title>Contact Us</Title>
+              <p><FontAwesomeIcon icon={faWhatsapp} /> 0741553806 / 0719155919</p>
+              <p><FontAwesomeIcon icon={faPhone} /> 0741553806 / 0719155919</p>
+              <p><FontAwesomeIcon icon={faEnvelope} /> skenvacreatives@gmail.com</p>
+            </div>
 
-
-      <FooterGrid>
-        <Column>
-          <h3>Contact Us</h3>
-          <p>
-            <FontAwesomeIcon icon={faWhatsapp} /> 0741553806
-          </p>
-          <p>
-            <FontAwesomeIcon icon={faPhone} />  0741553806
-          </p>
-          <p>
-            <FontAwesomeIcon icon={faEnvelope} />    skenvacreatives@gmail.com
-          </p>
-        </Column>
-
-        <Column>
-          <h3>Follow Us</h3>
-          <SocialLinks>
+            <div>
+              <Title>Follow Us</Title>
+              <SocialLinks>
             <SocialIcon href="https://facebook.com/skenvacreatives" target="_blank">
               <FontAwesomeIcon icon={faFacebook} />
             </SocialIcon>
@@ -181,21 +185,23 @@ const Footer: React.FC = () => {
               <FontAwesomeIcon icon={faLinkedin} />
             </SocialIcon>
           </SocialLinks>
-        </Column>
+            </div>
+          </LeftColumn>
 
-        <Column>
-          <h3>Quick Links</h3>
-          <p><a href="#about">About</a></p>
-          <p><a href="#services">Services</a></p>
-          <p><a href="#portfolio">Portfolio</a></p>
-          <p><a href="#testimonials">Testimonials</a></p>
-        </Column>
-      </FooterGrid>
+          <ContactFormContainer>
+            <Title>Get In Touch</Title>
+            <ContactForm onSubmit={handleSubmit}>
+              <Input name="name" type="text" placeholder="Your Name" required />
+              <Input name="email" type="email" placeholder="Your Email" required />
+              <TextArea name="message" rows={4} placeholder="Your Message" required />
+              <Button type="submit">{loading ? "Sending..." : "Send Message"}</Button>
+            </ContactForm>
+          </ContactFormContainer>
+        </FooterContent>
 
-      
-
-      <p style={{ marginTop: "20px", fontSize: "14px" }}>© 2025 SkenVa Creatives. All Rights Reserved.</p>
-    </FooterContainer>
+        <Copyright>© 2025 SkenVa Creatives. All Rights Reserved.</Copyright>
+      </motion.div>
+    </FooterWrapper>
   );
 };
 

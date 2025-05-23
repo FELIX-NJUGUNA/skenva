@@ -1,14 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import portfolio2 from "../assets/images/portfolio2.jpg";
-import portfolio3 from "../assets/images/portfolio3.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { colors } from "../assets/styles/colors";
+import { motion } from "framer-motion";
 
-const PortfolioContainer = styled.div`
+import company1Logo from "../assets/images/logo2.png";
+import company2Logo from "../assets/images/logo2.png";
+import company3Logo from "../assets/images/logo2.png";
+import company4Logo from "../assets/images/logo2.png";
+
+const PortfolioContainer = styled.section`
   text-align: center;
+  
   padding: 100px 60px;
-  background: linear-gradient(to bottom, ${colors.white},  ${colors.lightGrey});
-  font-family: "Poppins", sans-serif;
+  font-family: "Montserrat", sans-serif;
 `;
 
 const Title = styled.h2`
@@ -16,150 +22,134 @@ const Title = styled.h2`
   font-weight: bold;
   color: ${colors.royalBlue};
   margin-bottom: 50px;
+
+  @media (max-width: 600px) {
+    font-size: 2.4rem;
+  }
 `;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
   justify-content: center;
 
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 `;
 
-const PortfolioCard = styled.div`
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
+const Card = styled(motion.div)`
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
   padding: 30px;
-  border-radius: 16px;
-  text-align: center;
-  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease-in-out;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s ease-in-out;
   position: relative;
   overflow: hidden;
-  cursor: pointer;
-  height: 400px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 
   &:hover {
-    background: linear-gradient(135deg, ${colors.royalBlue}, ${colors.limeGreen});
-    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.3);
+    border-color: ${colors.limeGreen};
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: -40%;
+    width: 180%;
+    height: 180%;
+    background: linear-gradient(120deg, ${colors.royalBlue}, ${colors.limeGreen});
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: 0.5s;
+    z-index: 0;
+  }
+
+  &:hover::before {
+    opacity: 0.15;
   }
 `;
 
-const ImageWrapper = styled.div`
-  position: relative;
+const Logo = styled.img`
+  width: 80px;
+  height: auto;
+  margin-bottom: 20px;
+  z-index: 1;
 `;
 
-const Image = styled.img`
-  width: 100%;
-  height: 220px;
-  border-radius: 12px;
-  object-fit: cover;
-  transition: filter 0.3s ease-in-out;
-  filter: brightness(80%); /* Slight darkening */
-
-  ${PortfolioCard}:hover & {
-    filter: brightness(50%);
-  }
-`;
-
-const TitleOverlay = styled.div`
-  position: absolute;
-  bottom: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  color: white;
-  font-size: 1.6rem;
+const CompanyName = styled.h3`
+  font-size: 1.8rem;
   font-weight: bold;
-`;
-
-const DetailsWrapper = styled.div`
-  position: absolute;
-  top: 75%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-
-  ${PortfolioCard}:hover & {
-    opacity: 1;
-  }
-`;
-
-const Description = styled.p`
-  font-size: 1.2rem;
-  color: white;
-  max-width: 280px;
-  margin: 10px auto;
-  line-height: 1.6;
-`;
-
-const ViewButton = styled.a`
-  display: inline-block;
-  background: white;
   color: ${colors.royalBlue};
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
+  margin-bottom: 10px;
+  z-index: 1;
+`;
+
+const Category = styled.p`
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: ${colors.darkGrey};
+  margin-bottom: 20px;
+  z-index: 1;
+`;
+
+const LinkButton = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${colors.limeGreen};
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   text-decoration: none;
-  transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+  transition: all 0.3s ease;
+  z-index: 1;
 
   &:hover {
-    background: ${colors.limeGreen};
-    color: white;
+    background: ${colors.royalBlue};
+    transform: scale(1.1);
   }
 `;
 
 const Portfolio: React.FC = () => {
-  const projects = [
-    {
-      title: "Graphic Design",
-      img: portfolio2,
-      description: "Impactful branding with strong visual identity.",
-      link: "#graphic-design",
-    },
-    {
-      title: "UI/UX Design",
-      img: portfolio2,
-      description: "Engaging interfaces for seamless user experience.",
-      link: "#ui-ux",
-    },
-    {
-      title: "Development",
-      img: portfolio3,
-      description: "Scalable, optimized websites with clean coding.",
-      link: "#development",
-    },
-    {
-      title: "Digital Marketing",
-      img: portfolio3,
-      description: "Strategic brand visibility for business growth.",
-      link: "#marketing",
-    },
+  const companies = [
+    { name: "Tech Innovations", logo: company1Logo, category: "AI Solutions", link: "#tech-innovations" },
+    { name: "Creative Agency", logo: company2Logo, category: "Branding & Design", link: "#creative-agency" },
+    { name: "E-Commerce Solutions", logo: company3Logo, category: "Online Business Platforms", link: "#ecommerce" },
+    { name: "Marketing Experts", logo: company4Logo, category: "Digital Marketing", link: "#marketing-experts" },
   ];
 
   return (
     <PortfolioContainer>
-      <Title>Our Portfolio</Title>
+      <Title>Companies We've Worked With</Title>
       <Grid>
-        {projects.map((project, index) => (
-          <PortfolioCard key={index}>
-            <ImageWrapper>
-              <Image src={project.img} alt={project.title} />
-              <TitleOverlay>{project.title}</TitleOverlay>
-            </ImageWrapper>
-            <DetailsWrapper>
-              <Description>{project.description}</Description>
-              <ViewButton href={project.link}>View Project</ViewButton>
-            </DetailsWrapper>
-          </PortfolioCard>
+        {companies.map((company, index) => (
+          <Card
+            key={index}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.15 }}
+            viewport={{ once: true }}
+          >
+            <Logo src={company.logo} alt={company.name} />
+            <CompanyName>{company.name}</CompanyName>
+            <Category>{company.category}</Category>
+            <LinkButton href={company.link}>
+              <FontAwesomeIcon icon={faExternalLinkAlt} />
+            </LinkButton>
+          </Card>
         ))}
       </Grid>
     </PortfolioContainer>
