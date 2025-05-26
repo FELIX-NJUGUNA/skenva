@@ -9,12 +9,14 @@ import { FaPaintBrush, FaFacebook, FaGlobe } from "react-icons/fa";
 const ServicesContainer = styled.section`
   position: relative;
   padding: 5rem 2rem;
-  
   font-family: "Montserrat", sans-serif;
   text-align: center;
   overflow: hidden;
+  background: linear-gradient(135deg, ${colors.royalBlue} , #001d6e); /* Royal blue gradient */
+  color: white;
   z-index: 0;
 `;
+
 
 // Animated background blob styles
 const AnimatedBlob = styled.div`
@@ -44,7 +46,7 @@ const AnimatedBlob = styled.div`
 
 const Title = styled.h1`
   font-size: 3rem;
-  color: ${colors.royalBlue};
+  color: ${colors.white};
   margin-bottom: 1rem;
   z-index: 1;
   position: relative;
@@ -52,7 +54,7 @@ const Title = styled.h1`
 
 const Subtitle = styled.p`
   font-size: 1.2rem;
-  color: ${colors.darkGrey};
+  color: ${colors.white};
   max-width: 700px;
   margin: 0 auto 3rem;
   z-index: 1;
@@ -120,7 +122,7 @@ const Services: React.FC = () => {
       <AnimatedBlob style={{ top: "-100px", left: "-150px" }}>
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
           <path
-            fill={colors.limeGreen}
+            fill={colors.white}
             d="M42.3,-56.8C56.7,-49.5,70.4,-38.1,72.5,-24.6C74.6,-11.1,65.1,4.5,56.6,19.2C48,33.9,40.4,47.7,28.5,56.1C16.6,64.5,0.3,67.5,-13.9,63.3C-28.1,59.1,-40.3,47.6,-49.5,35.4C-58.6,23.1,-64.8,10,-65.1,-3.5C-65.5,-17.1,-60,-31.1,-49.4,-40.5C-38.8,-50,-23.1,-54.8,-8.2,-53.3C6.6,-51.7,13.2,-43.9,42.3,-56.8Z"
             transform="translate(100 100)"
           />

@@ -8,7 +8,9 @@ export const GlobalStyle = createGlobalStyle`
     color: ${colors.darkGrey};
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-x: hidden; 
+    overflow-y: hidden;
+    width:100%;
   }
 
   h1, h2 {

@@ -15,46 +15,53 @@ import 'react-toastify/dist/ReactToastify.css';
 import { colors } from "../assets/styles/colors";
 
 const FooterWrapper = styled.footer`
-  background: linear-gradient(135deg, ${colors.royalBlue}, ${colors.limeGreen});
-  color: white;
-  padding: 80px 30px;
-  text-align: center;
+  background: white;
+  color: black;
+  padding: 80px 20px 0;
   font-family: "Montserrat", sans-serif;
+  overflow-x: hidden;
 `;
 
 const FooterContent = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 250px;
+  flex-wrap: wrap;
+  gap: 60px;
   max-width: 1200px;
-  margin: auto;
-  text-align: left;
+  margin: 0 auto;
+  padding-bottom: 60px;
 
   @media (max-width: 768px) {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: stretch;
+    padding: 0 10px 60px;
   }
 `;
 
 const LeftColumn = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 30px;
+
+  @media (max-width: 768px) {
+    text-align: center;
+    align-items: center;
+  }
 `;
 
 const ContactFormContainer = styled.div`
   flex: 1;
   padding: 30px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 12px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 `;
 
 const Title = styled.h3`
   font-size: 24px;
+  font-weight: 600;
+  color: ${colors.royalBlue};
   margin-bottom: 20px;
 `;
 
@@ -65,32 +72,32 @@ const ContactForm = styled.form`
 `;
 
 const Input = styled.input`
-  width: 97%;
+  width: 100%;
   padding: 12px;
   border-radius: 8px;
   border: 1px solid ${colors.limeGreen};
-  font-family: "Montserrat", sans-serif;
   background: ${colors.white};
   color: black;
   outline: none;
+  font-family: "Montserrat", sans-serif;
 
   &::placeholder {
-    color: #ccc;
+    color: ${colors.darkGrey};
   }
 `;
 
 const TextArea = styled.textarea`
-  width: 97%;
+  width: 100%;
   padding: 12px;
   border-radius: 8px;
   border: 1px solid ${colors.limeGreen};
-  font-family: "Montserrat", sans-serif;
   background: ${colors.white};
   color: black;
   outline: none;
+  font-family: "Montserrat", sans-serif;
 
   &::placeholder {
-    color: #ccc;
+    color: ${colors.darkGrey};
   }
 `;
 
@@ -111,24 +118,32 @@ const Button = styled.button`
 
 const SocialLinks = styled.div`
   display: flex;
-  gap: 15px;
-  font-size: 30px;
+  justify-content: left;
+  flex-wrap: wrap;
+  gap: 20px;
+  
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 `;
 
 const SocialIcon = styled.a`
-  color: white;
+  color: ${colors.royalBlue};
   font-size: 28px;
-  transition: color 0.3s ease-in-out;
+  transition: transform 0.3s ease, color 0.3s ease;
 
   &:hover {
+    transform: scale(1.1);
     color: ${colors.limeGreen};
   }
 `;
 
-
-
-const Copyright = styled.p`
-  margin-top: 40px;
+const CopyrightSection = styled.div`
+  background: linear-gradient(135deg, ${colors.royalBlue}, #001d6e);
+  padding: 16px 0;
+  text-align: center;
+  color: white;
   font-size: 14px;
 `;
 
@@ -157,51 +172,58 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <FooterWrapper>
-      <ToastContainer />
-      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-        <FooterContent>
-          <LeftColumn>
-            <div>
-              <Title>Contact Us</Title>
-              <p><FontAwesomeIcon icon={faWhatsapp} /> 0741553806 / 0719155919</p>
-              <p><FontAwesomeIcon icon={faPhone} /> 0741553806 / 0719155919</p>
-              <p><FontAwesomeIcon icon={faEnvelope} /> skenvacreatives@gmail.com</p>
-            </div>
+    <>
+      <FooterWrapper>
+        <ToastContainer />
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+        >
+          <FooterContent>
+            <LeftColumn>
+              <div>
+                <Title>Contact Us</Title>
+                <p><FontAwesomeIcon icon={faWhatsapp} /> 0741553806 / 0719155919</p>
+                <p><FontAwesomeIcon icon={faPhone} /> 0741553806 / 0719155919</p>
+                <p><FontAwesomeIcon icon={faEnvelope} /> skenvacreatives@gmail.com</p>
+              </div>
 
-            <div>
-              <Title>Follow Us</Title>
-              <SocialLinks>
-            <SocialIcon href="https://facebook.com/skenvacreatives" target="_blank">
-              <FontAwesomeIcon icon={faFacebook} />
-            </SocialIcon>
-            <SocialIcon href="https://twitter.com/skenvacreatives" target="_blank">
-              <FontAwesomeIcon icon={faXTwitter} />
-            </SocialIcon>
-            <SocialIcon href="https://www.instagram.com/skenvacreatives?igsh=anh1aTBudWxpZWY5" target="_blank">
-              <FontAwesomeIcon icon={faInstagram} />
-            </SocialIcon>
-            <SocialIcon href="https://linkedin.com/company/skenvacreatives" target="_blank">
-              <FontAwesomeIcon icon={faLinkedin} />
-            </SocialIcon>
-          </SocialLinks>
-            </div>
-          </LeftColumn>
+              <div>
+                <Title>Follow Us</Title>
+                <SocialLinks>
+                  <SocialIcon href="https://facebook.com/skenvacreatives" target="_blank">
+                    <FontAwesomeIcon icon={faFacebook} />
+                  </SocialIcon>
+                  <SocialIcon href="https://twitter.com/skenvacreatives" target="_blank">
+                    <FontAwesomeIcon icon={faXTwitter} />
+                  </SocialIcon>
+                  <SocialIcon href="https://www.instagram.com/skenvacreatives?igsh=anh1aTBudWxpZWY5" target="_blank">
+                    <FontAwesomeIcon icon={faInstagram} />
+                  </SocialIcon>
+                  <SocialIcon href="https://linkedin.com/company/skenvacreatives" target="_blank">
+                    <FontAwesomeIcon icon={faLinkedin} />
+                  </SocialIcon>
+                </SocialLinks>
+              </div>
+            </LeftColumn>
 
-          <ContactFormContainer>
-            <Title>Get In Touch</Title>
-            <ContactForm onSubmit={handleSubmit}>
-              <Input name="name" type="text" placeholder="Your Name" required />
-              <Input name="email" type="email" placeholder="Your Email" required />
-              <TextArea name="message" rows={4} placeholder="Your Message" required />
-              <Button type="submit">{loading ? "Sending..." : "Send Message"}</Button>
-            </ContactForm>
-          </ContactFormContainer>
-        </FooterContent>
-
-        <Copyright>© 2025 SkenVa Creatives. All Rights Reserved.</Copyright>
-      </motion.div>
-    </FooterWrapper>
+            <ContactFormContainer>
+              <Title>Get In Touch</Title>
+              <ContactForm onSubmit={handleSubmit}>
+                <Input name="name" type="text" placeholder="Your Name" required />
+                <Input name="email" type="email" placeholder="Your Email" required />
+                <TextArea name="message" rows={4} placeholder="Your Message" required />
+                <Button type="submit">{loading ? "Sending..." : "Send Message"}</Button>
+              </ContactForm>
+            </ContactFormContainer>
+          </FooterContent>
+        </motion.div>
+      </FooterWrapper>
+      <CopyrightSection>
+        © 2025 SkenVa Creatives. All Rights Reserved.
+      </CopyrightSection>
+    </>
   );
 };
 

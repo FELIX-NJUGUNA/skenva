@@ -9,6 +9,7 @@ const PortfolioContainer = styled.div`
   padding: 50px;
 `;
 
+
 const Image = styled.img`
   width: 100%;
   height: auto;

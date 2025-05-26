@@ -15,23 +15,38 @@ interface ButtonProps {
 
 const BackToTopButton = styled.button<ButtonProps>`
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 40px;
+  right: 40px;
+  z-index: 1000; /* Ensures it's above most components */
   background: ${colors.royalBlue};
   color: white;
-  padding: 16px;
+  padding: 14px;
   border-radius: 50%;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   border: none;
   cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   opacity: ${({ showButton }) => (showButton ? 1 : 0)};
   visibility: ${({ showButton }) => (showButton ? "visible" : "hidden")};
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
+  transform: ${({ showButton }) => (showButton ? "translateY(0)" : "translateY(50px)")};
+
 
   &:hover {
     background: ${colors.limeGreen};
-    transform: scale(1.2);
+    transform: translateY(-5px) scale(1.15);
   }
+
+  &:focus {
+    outline: none;
+  }
+
+  @media (max-width: 768px) {
+  bottom: 20px;
+  right: 20px;
+  padding: 12px;
+}
+
 `;
 
 

@@ -5,23 +5,36 @@ import { colors } from "../assets/styles/colors";
 import logoImage from "../assets/images/logo2.png";
 
 const HeaderContainer = styled(motion.header)<{ isScrolled: boolean; isHidden: boolean }>`
-  background: rgba(255, 255, 255, ${({ isScrolled }) => (isScrolled ? 0.85 : 0.75)});
-  backdrop-filter: blur(12px);
-  padding: ${({ isScrolled }) => (isScrolled ? "10px 30px" : "15px 40px")};
+  background: ${({ isScrolled }) =>
+    isScrolled ? "rgba(255, 255, 255, 0.85)" : "rgba(255, 255, 255, 0.7)"};
+  backdrop-filter: blur(10px); /* Adds glassmorphic effect */
+  padding: ${({ isScrolled }) => (isScrolled ? "12px 30px" : "18px 40px")};
   position: fixed;
-  width: 100%;
-  top: ${({ isHidden }) => (isHidden ? "-100px" : "0")};
+  width: 95%;
+  max-width: 1100px;
+  top: ${({ isHidden }) => (isHidden ? "-100px" : "30px")};
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: all 0.4s ease-in-out;
-  box-shadow: ${({ isScrolled }) => (isScrolled ? "0px 4px 12px rgba(0, 0, 0, 0.1)" : "none")};
+  border-radius: ${({ isScrolled }) => (isScrolled ? "0" : "12px")};
+  transition: all 0.5s ease-in-out;
+  box-shadow: ${({ isScrolled }) => (isScrolled ? "0px 4px 12px rgba(0, 0, 0, 0.1)" : "0px 8px 20px rgba(0, 0, 0, 0.15)")};
 
   @media (max-width: 768px) {
-    padding: ${({ isScrolled }) => (isScrolled ? "8px 20px" : "12px 20px")};
+    width: 100%;
+    border-radius: 0;
+    top: 0; /* Keep it fixed for mobile */
+    left: 0;
+    transform: none;
+    background: rgba(255, 255, 255, 0.85);
   }
 `;
+
+
+
 
 const Logo = styled(motion.img)`
   height: 50px;
@@ -127,23 +140,38 @@ const Header: React.FC = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setIsScrolled(currentScrollY > 50);
-
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsHidden(true); // Hide header on fast scroll down
+  
+      if (currentScrollY > lastScrollY && currentScrollY > 120) {
+        setIsHidden(true);  // Hide header on fast scroll down
       } else {
-        setIsHidden(false); // Show header when scrolling up
+        setIsHidden(false); // Reveal header fully when scrolling up
       }
-
+  
       lastScrollY = currentScrollY;
     };
-
+  
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "auto";
+    return () => { document.body.style.overflow = "auto"; };
+  }, [menuOpen]);
+  
+  
+  
+
   return (
     <HeaderContainer className={isScrolled ? "scrolled" : ""} isScrolled={isScrolled} isHidden={isHidden}>
-      <Logo src={logoImage} alt="SkenVa Creatives Logo" />
+      <Logo
+        src={logoImage}
+        alt="SkenVa Creatives Logo"
+        onClick={() => scrollToSection("home")}
+        style={{ cursor: "pointer" }}
+      />
+
 
       <Nav>
         <motion.a whileHover={{ scale: 1.05 }} onClick={() => scrollToSection("home")}>Home</motion.a>

@@ -8,7 +8,7 @@ import { colors } from "../assets/styles/colors";
 
 const AboutSection = styled.section`
   position: relative;
-  
+  overflow: hidden;
   padding: 100px 40px;
   display: flex;
   flex-direction: column;
@@ -16,7 +16,7 @@ const AboutSection = styled.section`
   overflow: hidden;
 `;
 
-// Animated floating blob
+
 const AnimatedBlob = styled.div`
   position: absolute;
   z-index: 0;

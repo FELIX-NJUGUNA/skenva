@@ -9,10 +9,8 @@ import heroImage3 from "../assets/images/portfolio3.jpg";
 
 const HeroContainer = styled.section`
   height: 90vh;
-  margin: 10px auto;
   padding: 80px;
-  max-width: auto;
-  background: ${colors.royalBlue};
+  background: linear-gradient(to bottom right, #f4f7fb, #eaf1fd);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,7 +18,45 @@ const HeroContainer = styled.section`
   overflow: hidden;
   position: relative;
   box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
+
+  /* Floating blobs for a dynamic feel */
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(29, 43, 100, 0.08);
+    filter: blur(90px);
+    z-index: 0;
+  }
+
+  &::before {
+    width: 400px;
+    height: 400px;
+    top: -120px;
+    left: -150px;
+    animation: floatBlob1 15s infinite ease-in-out;
+  }
+
+  &::after {
+    width: 350px;
+    height: 350px;
+    bottom: 80px;
+    right: -100px;
+    animation: floatBlob2 20s infinite ease-in-out;
+  }
+
+  @keyframes floatBlob1 {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-25px); }
+  }
+
+  @keyframes floatBlob2 {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-30px); }
+  }
 `;
+
 
 const ImageWrapper = styled(motion.div)`
   position: absolute;
