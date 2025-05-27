@@ -1,6 +1,3 @@
-Certainly! Based on the information available from the [SkenVa GitHub repository](https://github.com/FELIX-NJUGUNA/skenva), here's a comprehensive `README.md` file for the project:
-
----
 
 # SkenVa Creatives
 
