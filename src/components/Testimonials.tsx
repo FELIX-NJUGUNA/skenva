@@ -34,12 +34,13 @@ const AnimatedBlob = styled.div`
 
 const TestimonialsContainer = styled.div`
   padding: 100px 50px;
+  z-index: 0;
   background: linear-gradient(135deg, ${colors.royalBlue}, #001d6e);
   text-align: center;
   font-family: "Montserrat", sans-serif;
   position: relative;
   overflow: hidden;
-  z-index: 1;
+  
 `;
 
 const Title = styled.h2`
@@ -48,7 +49,7 @@ const Title = styled.h2`
   color: #ffffff;
   margin-bottom: 60px;
   position: relative;
-  z-index: 2;
+  
 
   @media (max-width: 480px) {
     font-size: 2rem;
@@ -63,7 +64,7 @@ const TestimonialWrapper = styled.div`
   scroll-behavior: smooth;
   padding: 0 10px;
   position: relative;
-  z-index: 2;
+  z-index: 0;
 
   &::-webkit-scrollbar {
     display: none;
@@ -85,7 +86,7 @@ const TestimonialCard = styled.div<{ alternate: boolean }>`
   transition: all 0.3s ease-in-out;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
   color: white;
-  z-index: 2;
+  z-index: 0;
 
   &:hover {
     transform: translateY(-8px) scale(1.01);
@@ -172,7 +173,7 @@ const Testimonials: React.FC = () => {
   const testimonials = [
     { name: "Idyllic", quote: "SkenVa helped us boost our sales with top-tier SEO!", img: client1 },
     { name: "ArtKings Builders", quote: "Their graphic designs elevated our brand visibility!", img: client2 },
-    { name: "Vibe Creatives", quote: "Amazing branding services that transformed our online presence!", img: client3 },
+    { name: "Legacy Pixels", quote: "Amazing branding services that transformed our online presence!", img: client3 },
     { name: "NextGen Solutions", quote: "Best web development experience we've had!", img: client4 },
   ];
 

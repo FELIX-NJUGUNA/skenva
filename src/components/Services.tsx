@@ -12,7 +12,7 @@ const ServicesContainer = styled.section`
   font-family: "Montserrat", sans-serif;
   text-align: center;
   overflow: hidden;
-  background: linear-gradient(135deg, ${colors.royalBlue} , #001d6e); /* Royal blue gradient */
+  background: linear-gradient(135deg, ${colors.royalBlue} , #001d6e); 
   color: white;
   z-index: 0;
 `;

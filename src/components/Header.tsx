@@ -8,18 +8,18 @@ const HeaderContainer = styled(motion.header)<{ isScrolled: boolean; isHidden: b
   background: ${({ isScrolled }) =>
     isScrolled ? "rgba(255, 255, 255, 0.85)" : "rgba(255, 255, 255, 0.7)"};
   backdrop-filter: blur(10px); /* Adds glassmorphic effect */
-  padding: ${({ isScrolled }) => (isScrolled ? "12px 30px" : "18px 40px")};
+  padding: ${({ isScrolled }) => (isScrolled ? "10px 28px" : "15px 30px")};
   position: fixed;
   width: 95%;
+  z-index: 10;
   max-width: 1100px;
   top: ${({ isHidden }) => (isHidden ? "-100px" : "30px")};
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius: ${({ isScrolled }) => (isScrolled ? "0" : "12px")};
+  border-radius: ${({ isScrolled }) => (isScrolled ? "12px" : "50px")};
   transition: all 0.5s ease-in-out;
   box-shadow: ${({ isScrolled }) => (isScrolled ? "0px 4px 12px rgba(0, 0, 0, 0.1)" : "0px 8px 20px rgba(0, 0, 0, 0.15)")};
 
@@ -83,7 +83,7 @@ const MobileMenuIcon = styled(motion.div)`
   position: absolute;
   right: 20px;
   top: 15px;
-  margin-right: 50px;
+  margin-right: 70px;
   transition: transform 0.3s ease-in-out;
 
   &:hover {

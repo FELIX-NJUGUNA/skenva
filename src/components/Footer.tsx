@@ -15,8 +15,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { colors } from "../assets/styles/colors";
 
 const FooterWrapper = styled.footer`
-  background: white;
-  color: black;
+  background: linear-gradient(135deg, #0908c3, ${colors.royalBlue}); /* Updated gradient */
+  color: white;
+  z-index: 0;
   padding: 80px 20px 0;
   font-family: "Montserrat", sans-serif;
   overflow-x: hidden;
@@ -50,56 +51,73 @@ const LeftColumn = styled.div`
   }
 `;
 
-const ContactFormContainer = styled.div`
+const ContactFormContainer = styled(motion.div)`
   flex: 1;
   padding: 30px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15); /* Lighter visibility */
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-`;
-
-const Title = styled.h3`
-  font-size: 24px;
-  font-weight: 600;
-  color: ${colors.royalBlue};
-  margin-bottom: 20px;
+  backdrop-filter: blur(8px); /* Softer blur */
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.12);
 `;
 
 const ContactForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 18px; /* Increased spacing */
 `;
 
+const Title = styled.h3`
+  font-size: 24px;
+  font-weight: 600;
+  color: ${colors.white};
+  margin-bottom: 20px;
+`;
+
+
 const Input = styled.input`
-  width: 100%;
+  width: 97%;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid ${colors.limeGreen};
-  background: ${colors.white};
-  color: black;
+  border: 1px solid ${colors.white};
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
   outline: none;
   font-family: "Montserrat", sans-serif;
+  margin-bottom: 10px;
+  transition: box-shadow 0.3s ease-in-out;
+
+  &:focus {
+    box-shadow: 0 0 12px ${colors.limeGreen}; /* Subtle glow */
+    border-color: ${colors.limeGreen};
+  }
 
   &::placeholder {
-    color: ${colors.darkGrey};
+    color: rgba(255, 255, 255, 0.7);
   }
 `;
 
 const TextArea = styled.textarea`
-  width: 100%;
+  width: 97%;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid ${colors.limeGreen};
-  background: ${colors.white};
-  color: black;
+  border: 1px solid ${colors.white};
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
   outline: none;
   font-family: "Montserrat", sans-serif;
+  margin-bottom: 10px;
+  transition: box-shadow 0.3s ease-in-out;
+
+  &:focus {
+    box-shadow: 0 0 12px ${colors.limeGreen}; /* Subtle glow */
+    border-color: ${colors.limeGreen};
+  }
 
   &::placeholder {
-    color: ${colors.darkGrey};
+    color: rgba(255, 255, 255, 0.7);
   }
 `;
+
 
 const Button = styled.button`
   background-color: ${colors.limeGreen};
@@ -112,7 +130,8 @@ const Button = styled.button`
   transition: background 0.3s ease-in-out;
 
   &:hover {
-    background-color: ${colors.royalBlue};
+    background-color: ${colors.white};
+    color: ${colors.limeGreen};
   }
 `;
 
@@ -121,26 +140,24 @@ const SocialLinks = styled.div`
   justify-content: left;
   flex-wrap: wrap;
   gap: 20px;
-  
 
   @media (max-width: 768px) {
     justify-content: center;
   }
 `;
 
-const SocialIcon = styled.a`
-  color: ${colors.royalBlue};
+const SocialIcon = styled(motion.a)`
+  color: ${colors.white};
   font-size: 28px;
-  transition: transform 0.3s ease, color 0.3s ease;
+  transition: color 0.3s ease;
 
   &:hover {
-    transform: scale(1.1);
     color: ${colors.limeGreen};
   }
 `;
 
 const CopyrightSection = styled.div`
-  background: linear-gradient(135deg, ${colors.royalBlue}, #001d6e);
+ background: linear-gradient(135deg, ${colors.royalBlue} , #001d6e);
   padding: 16px 0;
   text-align: center;
   color: white;
@@ -155,6 +172,7 @@ const Footer: React.FC = () => {
     setLoading(true);
     const formData = new FormData(e.target as HTMLFormElement);
     formData.append("access_key", "f13f50ed-8d44-4d5d-8257-1bbeb5160f66");
+    formData.append("subject", "Contact Form  - SkenVa Creatives");
 
     const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
@@ -175,11 +193,7 @@ const Footer: React.FC = () => {
     <>
       <FooterWrapper>
         <ToastContainer />
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-        >
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
           <FooterContent>
             <LeftColumn>
               <div>
@@ -192,23 +206,23 @@ const Footer: React.FC = () => {
               <div>
                 <Title>Follow Us</Title>
                 <SocialLinks>
-                  <SocialIcon href="https://facebook.com/skenvacreatives" target="_blank">
+                  <SocialIcon href="https://facebook.com/skenvacreatives" target="_blank"  whileHover={{ scale: 1.2, y: -3 }}>
                     <FontAwesomeIcon icon={faFacebook} />
                   </SocialIcon>
-                  <SocialIcon href="https://twitter.com/skenvacreatives" target="_blank">
+                  <SocialIcon href="https://twitter.com/skenvacreatives" target="_blank" whileHover={{ scale: 1.2, y: -3 }}>
                     <FontAwesomeIcon icon={faXTwitter} />
                   </SocialIcon>
-                  <SocialIcon href="https://www.instagram.com/skenvacreatives?igsh=anh1aTBudWxpZWY5" target="_blank">
+                  <SocialIcon href="https://www.instagram.com/skenvacreatives?igsh=anh1aTBudWxpZWY5" target="_blank" whileHover={{ scale: 1.2, y: -3 }}>
                     <FontAwesomeIcon icon={faInstagram} />
                   </SocialIcon>
-                  <SocialIcon href="https://linkedin.com/company/skenvacreatives" target="_blank">
+                  <SocialIcon href="https://linkedin.com/company/skenvacreatives" target="_blank" whileHover={{ scale: 1.2, y: -3 }}>
                     <FontAwesomeIcon icon={faLinkedin} />
                   </SocialIcon>
                 </SocialLinks>
               </div>
             </LeftColumn>
 
-            <ContactFormContainer>
+            <ContactFormContainer initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
               <Title>Get In Touch</Title>
               <ContactForm onSubmit={handleSubmit}>
                 <Input name="name" type="text" placeholder="Your Name" required />

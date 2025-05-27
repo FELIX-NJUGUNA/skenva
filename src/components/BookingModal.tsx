@@ -3,59 +3,54 @@ import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 import { colors } from "../assets/styles/colors";
 
-const ModalWrapper = styled(motion.div)`
+// Service Options
+const services = [
+  { name: "Logos", price: "2,500 – 5,000 Ksh" },
+  { name: "Business Cards", price: "500 – 1,000 Ksh" },
+  { name: "Flyers & Posters", price: "500 – 1,000 Ksh" },
+  { name: "Social Media Posts", price: "500 Ksh" },
+  { name: "Basic Website", price: "15,000 Ksh" },
+  { name: "Business Website", price: "35,000 Ksh" },
+];
+
+// Styled Components
+const ModalWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 1000;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(6px);
-  z-index: 9999;
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   font-family: "Montserrat", sans-serif;
 `;
 
 const ModalContent = styled(motion.div)`
   background: white;
-  padding: 3rem;
-  border-radius: 20px;
+  border-radius: 12px;
+  padding: 2rem;
   width: 90%;
-  max-width: 550px;
-  box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.4);
-  font-family: "Poppins", sans-serif;
+  max-width: 600px;
   position: relative;
-`;
-
-const CloseButton = styled.button`
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: transparent;
-  border: none;
-  font-size: 1.8rem;
-  color: ${colors.royalBlue};
-  cursor: pointer;
+  overflow-y: auto;
+  max-height: 90vh;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
 `;
 
 const Title = styled.h2`
-  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-size: 26px;
   font-weight: bold;
-  margin-bottom: 15px;
   color: ${colors.royalBlue};
-`;
-
-const Description = styled.p`
-  font-size: 1.1rem;
-  margin-bottom: 25px;
-  color: ${colors.darkGrey};
+  text-align: center;
 `;
 
 const Label = styled.label`
   display: block;
-  margin-bottom: 10px;
+  margin: 1rem 0 0.5rem;
   font-weight: 600;
   color: ${colors.darkGrey};
 `;
@@ -63,98 +58,194 @@ const Label = styled.label`
 const Input = styled.input`
   width: 100%;
   padding: 12px;
-  margin-bottom: 16px;
-  border-radius: 8px;
-  border: 1px solid ${colors.lightGrey};
+  border: 1px solid #ccc;
+  border-radius: 6px;
   font-size: 1rem;
-  outline: none;
+  font-family: "Montserrat", sans-serif;
+  transition: box-shadow 0.2s ease-in-out;
+
+  &:focus {
+    box-shadow: 0 0 10px ${colors.limeGreen};
+    border-color: ${colors.limeGreen};
+  }
+
+  &::placeholder {
+    color: #aaa;
+    font-style: italic;
+  }
 `;
 
 const Select = styled.select`
   width: 100%;
   padding: 12px;
-  margin-bottom: 16px;
   border-radius: 8px;
   border: 1px solid ${colors.lightGrey};
   font-size: 1rem;
+  font-family: "Montserrat", sans-serif;
   outline: none;
+  background: white;
+  transition: box-shadow 0.2s ease-in-out;
+
+  &:focus {
+    box-shadow: 0 0 10px ${colors.limeGreen};
+    border-color: ${colors.limeGreen};
+  }
 `;
 
 const TextArea = styled.textarea`
   width: 100%;
+  min-height: 120px;
   padding: 12px;
-  border-radius: 8px;
-  border: 1px solid ${colors.lightGrey};
-  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
   font-size: 1rem;
-  resize: none;
-  min-height: 100px;
-  outline: none;
-`;
+  font-family: "Montserrat", sans-serif;
+  transition: box-shadow 0.2s ease-in-out;
 
-const SubmitButton = styled.button`
-  padding: 14px 30px;
-  font-size: 1.2rem;
-  background: ${colors.royalBlue};
-  color: white;
-  border-radius: 8px;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  &:focus {
+    box-shadow: 0 0 10px ${colors.limeGreen};
+    border-color: ${colors.limeGreen};
+  }
 
-  &:hover {
-    background: ${colors.limeGreen};
-    transform: scale(1.05);
+  &::placeholder {
+    color: #aaa;
+    font-style: italic;
   }
 `;
 
-const SuccessMessage = styled(motion.p)`
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: ${colors.limeGreen};
-  text-align: center;
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-top: 1.5rem;
 `;
 
-const BookingModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
-  isOpen,
-  onClose,
-}) => {
+const CancelButton = styled.button`
+  background-color: #ccc;
+  color: black;
+  border: none;
+  padding: 12px;
+  width: 50%;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+
+  &:hover {
+    background: #999;
+  }
+`;
+
+const SubmitButton = styled.button`
+  background-color: ${colors.royalBlue};
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 50%;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+
+  &:hover {
+    background: ${colors.limeGreen};
+  }
+
+  &:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+`;
+
+
+const SuccessMessage = styled(motion.div)`
+  text-align: center;
+  padding: 2rem;
+  font-size: 22px;
+  color: ${colors.limeGreen};
+  font-weight: bold;
+`;
+
+const PhoneWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const CountryCodeSelect = styled.select`
+  padding: 12px;
+  border-radius: 6px;
+  width: 35%;
+  font-family: "Montserrat", sans-serif;
+`;
+
+const PhoneInput = styled(Input)`
+  width: 65%;
+`;
+
+const BookingModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
   const [success, setSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedService, setSelectedService] = useState("");
+  const [countryCodes, setCountryCodes] = useState<{ name: string; code: string }[]>([]);
+const [selectedCode, setSelectedCode] = useState("+254");
+const [, setBudgetSuggestion] = useState("");
 
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "auto";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [isOpen]);
 
-  const handleBackgroundClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    if (e.target === e.currentTarget) onClose();
+
+const handleServiceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const selected = e.target.value;
+  setSelectedService(selected);
+
+  // Suggested budget ranges based on service selection
+  const budgetRanges: Record<string, string> = {
+    "Logos": "Recommended: 2,500 – 5,000 Ksh",
+    "Business Cards": "Recommended: 500 – 1,000 Ksh",
+    "Flyers & Posters": "Recommended: 500 – 1,000 Ksh",
+    "Social Media Posts": "Recommended: 500 Ksh",
+    "Basic Website": "Recommended: 15,000 Ksh",
+    "Business Website": "Recommended: 35,000 Ksh",
   };
+
+  setBudgetSuggestion(budgetRanges[selected] || "");
+};
+
+
+useEffect(() => {
+  fetch("https://restcountries.com/v3.1/all")
+    .then((response) => response.json())
+    .then((data) => {
+      const countries = data.map((c: any) => ({
+        name: c.name.common,
+        code: c.idd?.root + (c.idd?.suffixes?.[0] || ""),
+      })).filter((c: { code: any; }) => c.code);
+
+      setCountryCodes(countries.sort((a: { name: string; }, b: { name: any; }) => a.name.localeCompare(b.name)));
+    })
+    .catch((error) => console.error("Error fetching country codes:", error));
+}, []);
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (isSubmitting) return;
+    if (isSubmitting || !selectedService) return;
 
     setIsSubmitting(true);
 
-    const formData = new FormData(e.target as HTMLFormElement);
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    formData.append("service", selectedService);
     formData.append("access_key", "f13f50ed-8d44-4d5d-8257-1bbeb5160f66");
-    formData.append("replyto", formData.get("email") as string);
     formData.append("subject", "Service Booking Request - SkenVa Creatives");
+
+    
 
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         body: formData,
       });
-
       const data = await res.json();
-
       if (data.success) {
         setSuccess(true);
         setTimeout(() => {
@@ -163,11 +254,11 @@ const BookingModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
           onClose();
         }, 2000);
       } else {
-        alert("❌ Submission failed. Try again.");
+        alert("❌ Submission failed.");
         setIsSubmitting(false);
       }
-    } catch (error) {
-      alert("❌ Network error. Please try again later.");
+    } catch {
+      alert("❌ Network error. Try again.");
       setIsSubmitting(false);
     }
   };
@@ -175,70 +266,65 @@ const BookingModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <ModalWrapper
-          onClick={handleBackgroundClick}
-          aria-modal="true"
-          role="dialog"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
+        <ModalWrapper onClick={(e) => e.target === e.currentTarget && onClose()}>
           <ModalContent
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ duration: 0.3 }}
           >
             {!success ? (
               <>
-                <CloseButton onClick={onClose}>✖</CloseButton>
                 <Title>Book a Service</Title>
-                <Description>Select a service and provide your details.</Description>
                 <form onSubmit={handleSubmit}>
-                  <Label htmlFor="name">Your Name</Label>
-                  <Input
-                    type="text"
-                    name="name"
-                    placeholder="John Doe"
-                    required
-                  />
+                  <Label>Name</Label>
+                  <Input type="text" name="name" placeholder="Enter your full name" required />
 
-                  <Label htmlFor="email">Your Email</Label>
-                  <Input
-                    type="email"
-                    name="email"
-                    placeholder="you@example.com"
-                    required
-                  />
+                  <Label>Email</Label>
+                  <Input type="email" name="email" placeholder="Enter your email address" required />
 
-                  <Label htmlFor="service">Service</Label>
-                  <Select name="service" required>
+                  <Label>Phone</Label>
+                  <PhoneWrapper>
+                  <CountryCodeSelect name="countryCode" value={selectedCode} onChange={(e) => setSelectedCode(e.target.value)}>
+                        {countryCodes.map((country) => (
+                          <option key={country.code} value={country.code}>
+                            {country.name} ({country.code})
+                          </option>
+                            ))}
+                  </CountryCodeSelect>
+
+                    <PhoneInput type="tel" name="phone" placeholder="Enter phone number" required />
+                  </PhoneWrapper>
+
+                  <Label>Service</Label>
+                  <Select name="service" required onChange={handleServiceChange}>
                     <option value="">-- Select a service --</option>
-                    <option value="Logos">Logos - 2,500 – 5,000 Ksh</option>
-                    <option value="Business Cards">Business Cards - 500 – 1,000 Ksh</option>
-                    <option value="Flyers & Posters">Flyers & Posters - 500 – 1,000 Ksh</option>
-                    <option value="Social Media Posts">Social Media Posts - 500 Ksh</option>
-                    <option value="Basic Website">Basic Website - 15,000 Ksh</option>
-                    <option value="Business Website">Business Website - 35,000 Ksh</option>
-                  </Select>
+                        {services.map((s) => (
+                      <option key={s.name} value={s.name}>
+                      {s.name} - {s.price}
+                    </option>
+                          ))}
+                        </Select>
+                  
+                      
 
-                  <Label htmlFor="description">Project Description</Label>
-                  <TextArea
-                    name="description"
-                    placeholder="Tell us what you need..."
-                    required
-                  />
+                      <Label>Your Estimated Budget</Label>
+                      <Input type="number" name="budget" placeholder="Enter your estimated budget (Ksh)" min="500" required />
 
-                  <SubmitButton type="submit">
-                    {isSubmitting ? "Submitting..." : "Submit Booking"}
-                  </SubmitButton>
+
+                  <Label>Project Description</Label>
+                  <TextArea name="description" placeholder="Provide project details..." required />
+
+                  <ButtonGroup>
+                    <CancelButton type="button" onClick={onClose}>Cancel</CancelButton>
+                    <SubmitButton type="submit" disabled={isSubmitting || !selectedService}>
+                      {isSubmitting ? "Submitting..." : "Submit Booking"}
+                    </SubmitButton>
+                  </ButtonGroup>
+
                 </form>
               </>
             ) : (
-              <SuccessMessage
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
+              <SuccessMessage initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                 ✅ Booking Successful!
               </SuccessMessage>
             )}

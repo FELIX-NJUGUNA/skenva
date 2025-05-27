@@ -8,14 +8,20 @@ import { colors } from "../assets/styles/colors";
 
 const AboutSection = styled.section`
   position: relative;
+  font-family: "Montserrat", sans-serif;
   overflow: hidden;
   padding: 100px 40px;
   display: flex;
+  z-index: 0;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
-`;
+  background: linear-gradient(135deg, #0908c3, ${colors.royalBlue}); /* Deep blue gradient */
+  color: white;
 
+  @media (max-width: 768px) {
+    padding: 80px 20px;
+  }
+`;
 
 const AnimatedBlob = styled.div`
   position: absolute;
@@ -24,15 +30,9 @@ const AnimatedBlob = styled.div`
   animation: float 12s ease-in-out infinite alternate;
 
   @keyframes float {
-    0% {
-      transform: translate(0px, 0px) scale(1);
-    }
-    50% {
-      transform: translate(30px, -20px) scale(1.05);
-    }
-    100% {
-      transform: translate(0px, 0px) scale(1);
-    }
+    0% { transform: translate(0px, 0px) scale(1); }
+    50% { transform: translate(30px, -20px) scale(1.05); }
+    100% { transform: translate(0px, 0px) scale(1); }
   }
 
   svg {
@@ -49,16 +49,23 @@ const AboutContainer = styled(motion.div)`
   max-width: 1200px;
   width: 100%;
   gap: 60px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.12);
   padding: 50px;
   border-radius: 30px;
   backdrop-filter: blur(20px);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 30px rgba(255, 255, 255, 0.08);
 
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
+    gap: 40px;
+    padding: 40px;
+  }
+
+  @media (max-width: 768px) {
     flex-direction: column;
     text-align: center;
-    padding: 40px;
+    padding: 20px;
+    border-radius: 20px;
+    gap: 30px;
   }
 `;
 
@@ -68,16 +75,34 @@ const TextContent = styled.div`
   h2 {
     font-size: 3rem;
     font-weight: 800;
-    color: ${colors.royalBlue};
+    color: #ffffff;
     margin-bottom: 20px;
     line-height: 1.2;
+
+    @media (max-width: 768px) {
+      font-size: 2.5rem;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 2rem;
+    }
   }
 
   p {
     font-size: 1.4rem;
-    color: ${colors.darkGrey};
+    color: #dbeeff;
     line-height: 1.9;
     max-width: 600px;
+
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
   }
 `;
 
@@ -85,11 +110,19 @@ const ImageContainer = styled(motion.div)`
   width: 400px;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0px 18px 35px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 18px 35px rgba(255, 255, 255, 0.2);
 
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
+    width: 350px;
+  }
+
+  @media (max-width: 768px) {
     width: 100%;
-    max-width: 400px;
+    max-width: 300px;
+  }
+
+  @media (max-width: 480px) {
+    max-width: 250px;
   }
 `;
 
@@ -105,13 +138,12 @@ const ServicesSection = styled(motion.section)`
   width: 100%;
   max-width: 1200px;
   text-align: center;
-  z-index: 1;
 `;
 
 const ServiceTitle = styled.h2`
   font-size: 2.8rem;
   font-weight: 800;
-  color: ${colors.royalBlue};
+  color: #ffffff;
   margin-bottom: 60px;
 `;
 
@@ -120,34 +152,40 @@ const ServicesGrid = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 50px;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+
+  @media (max-width: 768px) {
     grid-template-columns: 1fr;
+    gap: 30px;
   }
 `;
 
 const ServiceCard = styled(motion.div)`
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.1);
   padding: 35px;
   border-radius: 20px;
   backdrop-filter: blur(12px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 28px rgba(255, 255, 255, 0.08);
   transition: all 0.3s ease-in-out;
 
   &:hover {
     transform: scale(1.07);
-    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 18px 36px rgba(255, 255, 255, 0.12);
   }
 
   h3 {
     font-size: 1.9rem;
     font-weight: 600;
-    color: ${colors.royalBlue};
+    color: #ffffff;
     margin-bottom: 10px;
   }
 
   p {
     font-size: 1.2rem;
-    color: ${colors.darkGrey};
+    color: #dbeeff;
     line-height: 1.7;
   }
 `;
@@ -159,7 +197,7 @@ const ServiceIcon = styled(FontAwesomeIcon)`
   transition: color 0.3s ease-in-out;
 
   ${ServiceCard}:hover & {
-    color: ${colors.royalBlue};
+    color: ${colors.white};
   }
 `;
 
@@ -170,52 +208,52 @@ const About: React.FC = () => {
       <AnimatedBlob style={{ top: "-100px", left: "-120px" }}>
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
           <path
-            fill={colors.limeGreen}
+            fill={colors.lightBlue}
             d="M41.6,-58.3C53.8,-49.8,63.6,-36.4,65.5,-22.3C67.5,-8.2,61.7,6.5,53.1,19.5C44.4,32.6,32.9,44,18.8,51.6C4.8,59.3,-11.7,63.2,-26.2,57.8C-40.8,52.4,-53.4,37.8,-60.4,21.1C-67.4,4.3,-68.9,-14.6,-60.8,-28.4C-52.7,-42.2,-34.9,-51,-18.1,-58.5C-1.3,-65.9,13.4,-71.1,27.4,-65.1C41.4,-59.1,55.7,-41.5,41.6,-58.3Z"
             transform="translate(100 100)"
           />
         </svg>
       </AnimatedBlob>
 
-      <AnimatedBlob style={{ bottom: "-100px", right: "-120px", animationDuration: "15s" }}>
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <path
-            fill={colors.royalBlue}
-            d="M36.6,-60.4C49.5,-51.1,62.4,-41.2,66.2,-28.2C70.1,-15.3,64.8,-0.2,60.8,15.6C56.8,31.4,54.2,47.9,43.4,58.7C32.6,69.5,13.3,74.5,-4.2,78.6C-21.6,82.8,-43.3,86.1,-53.2,75.4C-63.1,64.8,-61.1,40.2,-61.6,22.2C-62.1,4.2,-65.1,-7.1,-59.2,-20.1C-53.3,-33.2,-38.5,-48,-22.5,-55.4C-6.6,-62.7,10.7,-62.7,36.6,-60.4Z"
-            transform="translate(100 100)"
-          />
-        </svg>
-      </AnimatedBlob>
+      <AnimatedBlob style={{ bottom: "-80px", right: "-100px", animationDuration: "15s" }}>
+              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  fill={colors.darkBlue}
+                  d="M36.6,-60.4C49.5,-51.1,62.4,-41.2,66.2,-28.2C70.1,-15.3,64.8,-0.2,60.8,15.6C56.8,31.4,54.2,47.9,43.4,58.7C32.6,69.5,13.3,74.5,-4.2,78.6C-21.6,82.8,-43.3,86.1,-53.2,75.4C-63.1,64.8,-61.1,40.2,-61.6,22.2C-62.1,4.2,-65.1,-7.1,-59.2,-20.1C-53.3,-33.2,-38.5,-48,-22.5,-55.4C-6.6,-62.7,10.7,-62.7,36.6,-60.4Z"
+                  transform="translate(100 100)"
+                />
+              </svg>
+            </AnimatedBlob>
 
-      {/* Main About Content */}
-      <AboutContainer initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+
+      <ServiceTitle>About SkenVa Creatives</ServiceTitle>
+      <AboutContainer>
         <TextContent>
-          <h2>About SkenVa Creatives</h2>
-          <p>We ignite SME growth through innovative branding and digital marketing solutions that drive measurable impact, creativity, and brand transformation.</p>
+          <h2>Igniting SME Growth</h2>
+          <p>We specialize in branding and digital marketing solutions that drive measurable impact, creativity, and brand transformation.</p>
         </TextContent>
-        <ImageContainer initial={{ scale: 0.9 }} animate={{ scale: 1 }} transition={{ duration: 1 }}>
+        <ImageContainer>
           <Image src={aboutImage} alt="About Us" />
         </ImageContainer>
       </AboutContainer>
 
-      {/* Services Section */}
-      <ServicesSection initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.3 }}>
+      <ServicesSection>
         <ServiceTitle>What We Do</ServiceTitle>
         <ServicesGrid>
-          <ServiceCard whileHover={{ scale: 1.07 }}>
+          <ServiceCard>
             <ServiceIcon icon={faPalette} />
             <h3>Brand Identity</h3>
-            <p>From logos to full branding packages, we craft your visual identity with consistency and impact.</p>
+            <p>We craft visually stunning branding solutions to boost your company’s identity.</p>
           </ServiceCard>
-          <ServiceCard whileHover={{ scale: 1.07 }}>
+          <ServiceCard>
             <ServiceIcon icon={faLaptopCode} />
-            <h3>Web Design & Development</h3>
-            <p>We design and develop modern, responsive, and user-centric websites tailored to your brand.</p>
+            <h3>Web Development</h3>
+            <p>We create modern, responsive websites tailored to your brand vision.</p>
           </ServiceCard>
-          <ServiceCard whileHover={{ scale: 1.07 }}>
+          <ServiceCard>
             <ServiceIcon icon={faChartLine} />
             <h3>Digital Marketing</h3>
-            <p>Reach your audience with effective SEO, paid ads, and social media strategies that drive results.</p>
+            <p>Expand your audience reach with SEO, paid ads, and growth strategies.</p>
           </ServiceCard>
         </ServicesGrid>
       </ServicesSection>

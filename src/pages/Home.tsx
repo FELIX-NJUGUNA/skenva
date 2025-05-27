@@ -8,6 +8,7 @@ import Testimonials from "../components/Testimonials";
 import styled from "styled-components";
 import { colors } from "../assets/styles/colors";
 import { FaArrowUp } from "react-icons/fa";
+import { FaWhatsapp } from "react-icons/fa";
 
 interface ButtonProps {
   showButton: boolean;
@@ -21,7 +22,7 @@ const BackToTopButton = styled.button<ButtonProps>`
   background: ${colors.royalBlue};
   color: white;
   padding: 14px;
-  border-radius: 50%;
+  border-radius: 20%;
   font-size: 1.25rem;
   border: none;
   cursor: pointer;
@@ -47,6 +48,37 @@ const BackToTopButton = styled.button<ButtonProps>`
   padding: 12px;
 }
 
+`;
+
+const WhatsAppButton = styled.a<ButtonProps>`
+  position: fixed;
+  bottom: 40px;
+  left: 40px;
+  z-index: 1000; 
+  background: ${colors.limeGreen};
+  color: white;
+  padding: 14px;
+  border-radius: 20%;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  opacity: ${({ showButton }) => (showButton ? 1 : 0)};
+  visibility: ${({ showButton }) => (showButton ? "visible" : "hidden")};
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
+  transform: ${({ showButton }) => (showButton ? "translateY(0)" : "translateY(50px)")};
+
+  &:hover {
+    background: ${colors.royalBlue};
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    bottom: 20px;
+    left: 20px;
+    padding: 12px;
+    font-size: 1.3rem;
+  }
 `;
 
 
@@ -87,12 +119,21 @@ const Home: React.FC = () => {
         <Testimonials />
       </AnimatedSection>
 
+      <WhatsAppButton
+          href="https://wa.me/254741553806" /* Replace with your actual WhatsApp number */
+          target="_blank"
+          rel="noopener noreferrer"
+          showButton={showButton}
+        >
+          <FaWhatsapp /> {/* WhatsApp Icon */}
+        </WhatsAppButton>
+
+
       {showButton && (
         <BackToTopButton showButton={showButton} onClick={scrollToTop}>
         <FaArrowUp /> {/* Display only the arrow icon */}
       </BackToTopButton>
-)}
-
+      )}
 
     </>
   );
