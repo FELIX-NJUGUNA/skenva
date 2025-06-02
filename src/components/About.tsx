@@ -1,10 +1,30 @@
 import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import Slider from "react-slick";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPalette, faLaptopCode, faChartLine } from "@fortawesome/free-solid-svg-icons";
-import aboutImage from "../assets/images/bg.jpg";
+import { faPalette, faLaptopCode, faChartLine, faPhotoVideo } from "@fortawesome/free-solid-svg-icons";
 import { colors } from "../assets/styles/colors";
+import about1 from "../assets/images/about1.jpg";
+//import about2 from "../assets/images/about2.jpg";
+import about3 from "../assets/images/about3.jpg";
+import about4 from "../assets/images/about5.jpg";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+const aboutImages = [about1, about3,about4];
+
+const sliderSettings = {
+  dots: false,
+  infinite: true,
+  autoplay: true,
+  speed: 1200,
+  autoplaySpeed: 3000,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  arrows: false,
+  
+};
 
 const AboutSection = styled.section`
   position: relative;
@@ -15,7 +35,7 @@ const AboutSection = styled.section`
   z-index: 0;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(135deg, #0908c3, ${colors.royalBlue}); /* Deep blue gradient */
+  background: linear-gradient(135deg, #0908c3, ${colors.royalBlue});
   color: white;
 
   @media (max-width: 768px) {
@@ -46,6 +66,7 @@ const AboutContainer = styled(motion.div)`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   max-width: 1200px;
   width: 100%;
   gap: 60px;
@@ -54,11 +75,6 @@ const AboutContainer = styled(motion.div)`
   border-radius: 30px;
   backdrop-filter: blur(20px);
   box-shadow: 0 12px 30px rgba(255, 255, 255, 0.08);
-
-  @media (max-width: 1024px) {
-    gap: 40px;
-    padding: 40px;
-  }
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -107,30 +123,56 @@ const TextContent = styled.div`
 `;
 
 const ImageContainer = styled(motion.div)`
-  width: 400px;
+  flex: 1;
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0px 18px 35px rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 22px 40px rgba(255, 255, 255, 0.3);
+  }
+
+  .slick-slider {
+    margin-bottom: 0 !important;
+  }
+
+  .slick-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 20px;
+    transition: transform 0.5s ease-in-out;
+    display: block;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+
+  
 
   @media (max-width: 1024px) {
-    width: 350px;
+    max-width: 400px;
+    height: 320px;
   }
 
   @media (max-width: 768px) {
-    width: 100%;
-    max-width: 300px;
+    max-width: 320px;
+    height: 280px;
   }
 
   @media (max-width: 480px) {
-    max-width: 250px;
+    max-width: 260px;
+    height: 220px;
   }
 `;
 
-const Image = styled.img`
-  width: 100%;
-  height: auto;
-  display: block;
-`;
 
 const ServicesSection = styled(motion.section)`
   margin-top: 100px;
@@ -216,15 +258,14 @@ const About: React.FC = () => {
       </AnimatedBlob>
 
       <AnimatedBlob style={{ bottom: "-80px", right: "-100px", animationDuration: "15s" }}>
-              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  fill={colors.darkBlue}
-                  d="M36.6,-60.4C49.5,-51.1,62.4,-41.2,66.2,-28.2C70.1,-15.3,64.8,-0.2,60.8,15.6C56.8,31.4,54.2,47.9,43.4,58.7C32.6,69.5,13.3,74.5,-4.2,78.6C-21.6,82.8,-43.3,86.1,-53.2,75.4C-63.1,64.8,-61.1,40.2,-61.6,22.2C-62.1,4.2,-65.1,-7.1,-59.2,-20.1C-53.3,-33.2,-38.5,-48,-22.5,-55.4C-6.6,-62.7,10.7,-62.7,36.6,-60.4Z"
-                  transform="translate(100 100)"
-                />
-              </svg>
-            </AnimatedBlob>
-
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill={colors.darkBlue}
+            d="M36.6,-60.4C49.5,-51.1,62.4,-41.2,66.2,-28.2C70.1,-15.3,64.8,-0.2,60.8,15.6C56.8,31.4,54.2,47.9,43.4,58.7C32.6,69.5,13.3,74.5,-4.2,78.6C-21.6,82.8,-43.3,86.1,-53.2,75.4C-63.1,64.8,-61.1,40.2,-61.6,22.2C-62.1,4.2,-65.1,-7.1,-59.2,-20.1C-53.3,-33.2,-38.5,-48,-22.5,-55.4C-6.6,-62.7,10.7,-62.7,36.6,-60.4Z"
+            transform="translate(100 100)"
+          />
+        </svg>
+      </AnimatedBlob>
 
       <ServiceTitle>About SkenVa Creatives</ServiceTitle>
       <AboutContainer>
@@ -233,7 +274,13 @@ const About: React.FC = () => {
           <p>We specialize in branding and digital marketing solutions that drive measurable impact, creativity, and brand transformation.</p>
         </TextContent>
         <ImageContainer>
-          <Image src={aboutImage} alt="About Us" />
+          <Slider {...sliderSettings}>
+            {aboutImages.map((imgSrc, index) => (
+              <div key={index}>
+                <img src={imgSrc} alt={`About us ${index + 1}`} />
+              </div>
+            ))}
+          </Slider>
         </ImageContainer>
       </AboutContainer>
 
@@ -245,6 +292,11 @@ const About: React.FC = () => {
             <h3>Brand Identity</h3>
             <p>We craft visually stunning branding solutions to boost your company’s identity.</p>
           </ServiceCard>
+          <ServiceCard style={{ border: `2px solid ${colors.limeGreen}`, transform: "scale(1.05)" }}>
+            <ServiceIcon icon={faChartLine} style={{ fontSize: "4rem", color: colors.limeGreen }} />
+            <h3>Social Media Management</h3>
+            <p>We manage, grow, and elevate your social presence like never before.</p>
+          </ServiceCard>
           <ServiceCard>
             <ServiceIcon icon={faLaptopCode} />
             <h3>Web Development</h3>
@@ -254,6 +306,16 @@ const About: React.FC = () => {
             <ServiceIcon icon={faChartLine} />
             <h3>Digital Marketing</h3>
             <p>Expand your audience reach with SEO, paid ads, and growth strategies.</p>
+          </ServiceCard>
+          <ServiceCard>
+            <ServiceIcon icon={faPalette} />
+            <h3>Graphic Design</h3>
+            <p>From social assets to product visuals, we make your brand visually unforgettable.</p>
+          </ServiceCard>
+          <ServiceCard>
+            <ServiceIcon icon={faPhotoVideo} />
+            <h3>Photography & Videography</h3>
+            <p>We capture and produce high-quality content that tells your story visually.</p>
           </ServiceCard>
         </ServicesGrid>
       </ServicesSection>

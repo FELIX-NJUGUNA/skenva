@@ -11,11 +11,12 @@ const services = [
   { name: "Social Media Posts", price: "500 Ksh" },
   { name: "Basic Website", price: "15,000 Ksh" },
   { name: "Business Website", price: "35,000 Ksh" },
+  { name: "SEO Optimization", price: "5,000 – 10,000 Ksh" },
 ];
 
 // Styled Components
 const ModalWrapper = styled.div`
-  position: fixed;
+   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
@@ -205,6 +206,7 @@ const handleServiceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     "Social Media Posts": "Recommended: 500 Ksh",
     "Basic Website": "Recommended: 15,000 Ksh",
     "Business Website": "Recommended: 35,000 Ksh",
+    "SEO Optimization": "Recommended: 5,000 – 10,000 Ksh",
   };
 
   setBudgetSuggestion(budgetRanges[selected] || "");

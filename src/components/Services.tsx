@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { colors } from "../assets/styles/colors";
 import ServiceCard from "../components/ServiceCard";
 import BookingModal from "../components/BookingModal";
-import { FaPaintBrush, FaFacebook, FaGlobe } from "react-icons/fa";
+import { FaPaintBrush, FaFacebook, FaGlobe, FaSearch } from "react-icons/fa";
 
 // Container for the entire services section
 const ServicesContainer = styled.section`
@@ -116,6 +116,15 @@ const Services: React.FC = () => {
     { name: "Branding Consulting", price: "Customized Packages" },
   ];
 
+  const seoServices = [
+    { name: "Basic SEO Audit", price: "5,000 Ksh" },
+    { name: "On-Page SEO Optimization", price: "10,000 Ksh" },
+    { name: "Technical SEO Setup", price: "12,000 Ksh" },
+    { name: "Monthly SEO Management", price: "20,000 Ksh" },
+  ];
+  
+
+
   return (
     <ServicesContainer>
       {/* Animated Background Blobs */}
@@ -164,6 +173,14 @@ const Services: React.FC = () => {
           icon={<FaGlobe />}
           accentColor={colors.royalBlue}
         />
+
+        <ServiceCard
+          title="SEO Services"
+          services={seoServices}
+          icon={<FaSearch />}
+          accentColor={colors.limeGreen}
+        />
+
       </CardsWrapper>
 
       <CallToAction onClick={() => setModalOpen(true)}>Book a Service</CallToAction>

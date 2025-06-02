@@ -6,6 +6,14 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import heroImage1 from "../assets/images/webdesign.jpg";
 import heroImage2 from "../assets/images/design.jpg";
 import heroImage3 from "../assets/images/marketing.jpg";
+import heroImage4 from "../assets/images/about4.jpg";// Assuming you have a utility function for preloading images
+
+const preloadImages = (imagePaths: string[]) => {
+  imagePaths.forEach((src) => {
+    const img = new Image();
+    img.src = src;
+  });
+};
 
 const HeroContainer = styled.section`
   height: 100dvh;
@@ -109,12 +117,13 @@ const CTAButton = styled(motion.a)`
   color: white;
   background: ${colors.royalBlue};
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.4s ease-in-out;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 
   &:hover {
     background: ${colors.limeGreen};
-    transform: translateY(-3px);
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   }
 
   &:nth-child(2) {
@@ -132,26 +141,28 @@ const ArrowButton = styled.button`
   transform: translateY(-50%);
   background: rgba(0, 0, 0, 0.4);
   color: white;
-  padding: 10px;
+  padding: 12px;
   border-radius: 50%;
   font-size: 1.2rem;
   border: none;
   cursor: pointer;
   z-index: 3;
   opacity: 0;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease-in-out;
 
   ${HeroContainer}:hover & {
     opacity: 1;
+    transform: translateY(-50%) scale(1.1);
   }
 
   @media (max-width: 768px) {
     opacity: 1;
-    padding: 8px;
+    padding: 10px;
   }
 
   &:hover {
     background: ${colors.limeGreen};
+    transform: scale(1.15);
   }
 `;
 
@@ -186,9 +197,20 @@ const Hero: React.FC = () => {
       description:
         "Increase visibility and boost sales with top-tier SEO and marketing strategies. We optimize your presence to ensure sustainable growth.",
     },
+    {
+      image: heroImage4, 
+      heading: "Strategic Social Media Management",
+      subheading: "Engagement & Growth",
+      description:
+        "Boost your brand's online presence with expert social media management. We craft compelling content, optimize engagement, and grow your audience effectively.",
+    },
   ];
 
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+
+  useEffect(() => {
+    preloadImages(slides.map((slide) => slide.image)); // Preload all images
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -219,42 +241,18 @@ const Hero: React.FC = () => {
         >
           {slides[currentSlideIndex].heading}
         </Heading>
-        <Subheading
-          key={slides[currentSlideIndex].subheading}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          {slides[currentSlideIndex].subheading}
-        </Subheading>
-        <Description
-          key={slides[currentSlideIndex].description}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          {slides[currentSlideIndex].description}
-        </Description>
+        <Subheading>{slides[currentSlideIndex].subheading}</Subheading>
+        <Description>{slides[currentSlideIndex].description}</Description>
         <CTAContainer>
           <CTAButton href="#services">Explore Services</CTAButton>
           <CTAButton href="#contact">Get in Touch</CTAButton>
         </CTAContainer>
       </ContentWrapper>
 
-      <LeftButton
-        aria-label="Previous Slide"
-        onClick={() =>
-          setCurrentSlideIndex((prev) => (prev - 1 + slides.length) % slides.length)
-        }
-      >
+      <LeftButton onClick={() => setCurrentSlideIndex((prev) => (prev - 1 + slides.length) % slides.length)}>
         <FaArrowLeft />
       </LeftButton>
-      <RightButton
-        aria-label="Next Slide"
-        onClick={() =>
-          setCurrentSlideIndex((prev) => (prev + 1) % slides.length)
-        }
-      >
+      <RightButton onClick={() => setCurrentSlideIndex((prev) => (prev + 1) % slides.length)}>
         <FaArrowRight />
       </RightButton>
     </HeroContainer>
