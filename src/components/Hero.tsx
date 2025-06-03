@@ -15,6 +15,13 @@ const preloadImages = (imagePaths: string[]) => {
   });
 };
 
+const handleScroll = (id: string) => {
+  const section = document.querySelector(id);
+  if (section) {
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+};
+
 const HeroContainer = styled.section`
   height: 100dvh;
   width: 100%;
@@ -108,17 +115,17 @@ const CTAContainer = styled.div`
   margin-top: 20px;
 `;
 
-const CTAButton = styled(motion.a)`
+const CTAButton = styled(motion.button)`
   padding: 14px 30px;
   border-radius: 10px;
   font-size: 1rem;
   font-weight: bold;
-  text-decoration: none;
   color: white;
   background: ${colors.royalBlue};
   cursor: pointer;
   transition: all 0.4s ease-in-out;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  border: none;
 
   &:hover {
     background: ${colors.limeGreen};
@@ -244,9 +251,9 @@ const Hero: React.FC = () => {
         <Subheading>{slides[currentSlideIndex].subheading}</Subheading>
         <Description>{slides[currentSlideIndex].description}</Description>
         <CTAContainer>
-          <CTAButton href="#services">Explore Services</CTAButton>
-          <CTAButton href="#contact">Get in Touch</CTAButton>
-        </CTAContainer>
+          <CTAButton onClick={() => handleScroll("#services")}>Explore Services</CTAButton>
+          <CTAButton onClick={() => handleScroll("#contact")}>Get in Touch</CTAButton>
+        </CTAContainer>;
       </ContentWrapper>
 
       <LeftButton onClick={() => setCurrentSlideIndex((prev) => (prev - 1 + slides.length) % slides.length)}>
