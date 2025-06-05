@@ -5,6 +5,7 @@ import client1 from "../assets/images/placeholder.png";
 import client2 from "../assets/images/placeholder.png";
 import client3 from "../assets/images/placeholder.png";
 import client4 from "../assets/images/placeholder.png";
+import client5 from "../assets/images/placeholder.png"
 
 const AnimatedBlob = styled.div`
   position: absolute;
@@ -175,6 +176,7 @@ const Testimonials: React.FC = () => {
     { name: "ArtKings Builders", quote: "Their graphic designs elevated our brand visibility!", img: client2 },
     { name: "Legacy Pixels", quote: "Amazing branding services that transformed our online presence!", img: client3 },
     { name: "NextGen Solutions", quote: "Best web development experience we've had!", img: client4 },
+    { name: "Valuable Brands", quote: "Best service I got out of Skenva which showed huge growth to our company", img: client5 },
   ];
 
   useEffect(() => {
