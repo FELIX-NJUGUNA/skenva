@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 import { colors } from "../assets/styles/colors";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import heroImage1 from "../assets/images/webdesign.jpg";
-import heroImage2 from "../assets/images/design.jpg";
-import heroImage3 from "../assets/images/marketing.jpg";
-import heroImage4 from "../assets/images/about4.jpg";// Assuming you have a utility function for preloading images
+import heroImage1 from "../assets/images/webdesign.webp";
+import heroImage2 from "../assets/images/design.webp";
+import heroImage3 from "../assets/images/marketing.webp";
+import heroImage4 from "../assets/images/about4.webp";// Assuming you have a utility function for preloading images
 
 const preloadImages = async (imagePaths: string[]) => {
   await Promise.all(

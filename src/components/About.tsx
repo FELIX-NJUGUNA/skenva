@@ -5,10 +5,10 @@ import Slider from "react-slick";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPalette, faLaptopCode, faChartLine, faPhotoVideo } from "@fortawesome/free-solid-svg-icons";
 import { colors } from "../assets/styles/colors";
-import about1 from "../assets/images/about1.jpg";
+import about1 from "../assets/images/about1.webp";
 //import about2 from "../assets/images/about2.jpg";
-import about3 from "../assets/images/about3.jpg";
-import about4 from "../assets/images/about5.jpg";
+import about3 from "../assets/images/about3.webp";
+import about4 from "../assets/images/about5.webp";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 

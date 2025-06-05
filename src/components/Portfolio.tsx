@@ -2,10 +2,10 @@ import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { colors } from "../assets/styles/colors";
 import company1Logo from "../assets/images/lplogo.png";
-import company2Logo from "../assets/images/artkings.png";
-import company3Logo from "../assets/images/logo2.png";
-import company4Logo from "../assets/images/image.png"; 
-import company5logo from "../assets/images/vba.png"
+import company2Logo from "../assets/images/artkings.webp";
+import company3Logo from "../assets/images/logo2.webp";
+import company4Logo from "../assets/images/image.webp"; 
+import company5logo from "../assets/images/vba.webp"
 
 // FLOATING BLOB EFFECT
 const AnimatedBlob = styled.div`
@@ -98,6 +98,7 @@ const Logo = styled.img`
   max-width: 100px;
   max-height: 100px;
   object-fit: contain;
+  loading: "lazy";
 
   @media (max-width: 480px) {
     max-width: 80px; /* Adjusted size for mobile */

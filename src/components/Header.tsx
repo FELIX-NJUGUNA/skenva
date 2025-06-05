@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { colors } from "../assets/styles/colors";
-import logoImage from "../assets/images/logo2.png";
+import logoImage from "../assets/images/logo2.webp";
 
 const HeaderContainer = styled(motion.header)<{ isScrolled: boolean; isHidden: boolean }>`
   background: ${({ isScrolled }) =>
@@ -95,7 +95,7 @@ const MobileMenuIcon = styled(motion.div)`
   }
 `;
 
-const MobileNav = styled(motion.nav)<{ isOpen: boolean }>`
+const MobileNav = styled.nav<{ isOpen: boolean }>`
   display: flex;
   flex-direction: column;
   background: rgba(255, 255, 255, 0.95);
@@ -127,7 +127,10 @@ const MobileNav = styled(motion.nav)<{ isOpen: boolean }>`
 `;
 
 const scrollToSection = (id: string) => {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const section = document.querySelector(id);
+  if (section) {
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 };
 
 const Header: React.FC = () => {
@@ -174,12 +177,12 @@ const Header: React.FC = () => {
 
 
       <Nav>
-        <motion.a whileHover={{ scale: 1.05 }} onClick={() => scrollToSection("home")}>Home</motion.a>
-        <motion.a whileHover={{ scale: 1.05 }} onClick={() => scrollToSection("about")}>About</motion.a>
-        <motion.a whileHover={{ scale: 1.05 }} onClick={() => scrollToSection("services")}>Services</motion.a>
-        <motion.a whileHover={{ scale: 1.05 }} onClick={() => scrollToSection("portfolio")}>Portfolio</motion.a>
-        <motion.a whileHover={{ scale: 1.05 }} onClick={() => scrollToSection("testimonials")}>Testimonials</motion.a>
-        <motion.a whileHover={{ scale: 1.05 }} onClick={() => scrollToSection("contact")}>Contact</motion.a>
+      <a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection("#home"); }}>Home</a>
+        <a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection("#about"); }}>About</a>
+        <a href="#services" onClick={(e) => { e.preventDefault(); scrollToSection("#services"); }}>Services</a>
+        <a href="#portfolio" onClick={(e) => { e.preventDefault(); scrollToSection("#portfolio"); }}>Portfolio</a>
+        <a href="#testimonials" onClick={(e) => { e.preventDefault(); scrollToSection("#testimonials"); }}>Testimonials</a>
+        <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection("#contact"); }}>Contact</a>
       </Nav>
 
       <MobileMenuIcon whileTap={{ scale: 0.9 }} onClick={() => setMenuOpen(!menuOpen)}>
@@ -187,12 +190,12 @@ const Header: React.FC = () => {
       </MobileMenuIcon>
 
       <MobileNav isOpen={menuOpen}>
-        <motion.a whileHover={{ scale: 1.05 }} onClick={() => { scrollToSection("home"); setMenuOpen(false); }}>Home</motion.a>
-        <motion.a whileHover={{ scale: 1.05 }} onClick={() => { scrollToSection("about"); setMenuOpen(false); }}>About</motion.a>
-        <motion.a whileHover={{ scale: 1.05 }} onClick={() => { scrollToSection("services"); setMenuOpen(false); }}>Services</motion.a>
-        <motion.a whileHover={{ scale: 1.05 }} onClick={() => { scrollToSection("portfolio"); setMenuOpen(false); }}>Portfolio</motion.a>
-        <motion.a whileHover={{ scale: 1.05 }} onClick={() => { scrollToSection("testimonials"); setMenuOpen(false); }}>Testimonials</motion.a>
-        <motion.a whileHover={{ scale: 1.05 }} onClick={() => { scrollToSection("contact"); setMenuOpen(false); }}>Contact</motion.a>
+      <a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection("#home"); setMenuOpen(false); }}>Home</a>
+      <a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection("#about"); setMenuOpen(false); }}>About</a>
+      <a href="#services" onClick={(e) => { e.preventDefault(); scrollToSection("#services"); setMenuOpen(false); }}>Services</a>
+      <a href="#portfolio" onClick={(e) => { e.preventDefault(); scrollToSection("#portfolio"); setMenuOpen(false); }}>Portfolio</a>
+      <a href="#testimonials" onClick={(e) => { e.preventDefault(); scrollToSection("#testimonials"); setMenuOpen(false); }}>Testimonials</a>
+      <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection("#contact"); setMenuOpen(false); }}>Contact</a>
       </MobileNav>
     </HeaderContainer>
   );
