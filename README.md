@@ -1,8 +1,11 @@
+   ![alt text](logo2.png)
+
+
 # **Skenva - Marketing Agency Website**  
 
 🚀 **Skenva** is a modern and fully responsive marketing agency website built with **React**, designed to enhance branding, digital marketing, and web presence. It integrates **smooth animations, optimized performance, and SEO-friendly features** for maximum reach.
 
-![Skenva Creatives](https://skenvacreatives.vercel.app/logo.png)  
+
 
 🔗 **Live Demo**: [Skenva Creatives](https://skenvacreatives.vercel.app)  
 📌 **GitHub Repository**: [Skenva on GitHub](https://github.com/FELIX-NJUGUNA/skenva)  
