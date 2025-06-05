@@ -1,6 +1,3 @@
-   ![alt text](logo2.png)
-
-
 # **Skenva - Marketing Agency Website**  
 
 🚀 **Skenva** is a modern and fully responsive marketing agency website built with **React**, designed to enhance branding, digital marketing, and web presence. It integrates **smooth animations, optimized performance, and SEO-friendly features** for maximum reach.
