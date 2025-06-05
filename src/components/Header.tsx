@@ -8,7 +8,7 @@ const HeaderContainer = styled(motion.header)<{ isScrolled: boolean; isHidden: b
   background: ${({ isScrolled }) =>
     isScrolled ? "rgba(255, 255, 255, 0.85)" : "rgba(255, 255, 255, 0.7)"};
   backdrop-filter: blur(10px); /* Adds glassmorphic effect */
-  padding: ${({ isScrolled }) => (isScrolled ? "10px 28px" : "15px 30px")};
+  padding: ${({ isScrolled }) => (isScrolled ? "10px 28px" : "12px 29px")};
   position: fixed;
   width: 95%;
   z-index: 10;
