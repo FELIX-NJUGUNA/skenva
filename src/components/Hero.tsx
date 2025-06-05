@@ -8,12 +8,18 @@ import heroImage2 from "../assets/images/design.jpg";
 import heroImage3 from "../assets/images/marketing.jpg";
 import heroImage4 from "../assets/images/about4.jpg";// Assuming you have a utility function for preloading images
 
-const preloadImages = (imagePaths: string[]) => {
-  imagePaths.forEach((src) => {
-    const img = new Image();
-    img.src = src;
-  });
+const preloadImages = async (imagePaths: string[]) => {
+  await Promise.all(
+    imagePaths.map((src) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = resolve;
+      });
+    })
+  );
 };
+
 
 const handleScroll = (id: string) => {
   const section = document.querySelector(id);
@@ -52,6 +58,14 @@ const ImageWrapper = styled(motion.div)`
     height: 100%;
     background: rgba(0, 0, 0, 0.6);
     z-index: 1;
+  }
+
+   @media (max-width: 768px) {
+    height: 100%
+  }
+
+  @media (max-width: 480px) {
+    height: 100%
   }
 `;
 
@@ -231,10 +245,10 @@ const Hero: React.FC = () => {
       <AnimatePresence mode="wait">
         <ImageWrapper
           key={slides[currentSlideIndex].image}
-          initial={{ opacity: 0, scale: 1.02 }}
+          initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.98 }}
-          transition={{ duration: 1.4, ease: "easeInOut" }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          transition={{ duration: 1.0, ease: "easeInOut" }}
           style={{ backgroundImage: `url(${slides[currentSlideIndex].image})` }}
         />
       </AnimatePresence>
