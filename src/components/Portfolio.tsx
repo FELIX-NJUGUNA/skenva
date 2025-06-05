@@ -4,8 +4,8 @@ import { colors } from "../assets/styles/colors";
 import company1Logo from "../assets/images/lplogo.png";
 import company2Logo from "../assets/images/artkings.png";
 import company3Logo from "../assets/images/logo2.png";
-import company4Logo from "../assets/images/image.png"; // Placeholder for additional logos
-
+import company4Logo from "../assets/images/image.png"; 
+import company5logo from "../assets/images/vba.png"
 
 // FLOATING BLOB EFFECT
 const AnimatedBlob = styled.div`
@@ -129,7 +129,7 @@ const Dot = styled.div<{ active: boolean }>`
 const Portfolio: React.FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const companies = [company1Logo, company2Logo, company3Logo, company4Logo]; 
+  const companies = [company1Logo, company2Logo, company3Logo, company4Logo, company5logo]; 
 
   useEffect(() => {
     const interval = setInterval(() => {
