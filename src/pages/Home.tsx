@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { colors } from "../assets/styles/colors";
 import { FaArrowUp } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
+import FAQ from "../components/Faq";
 
 interface ButtonProps {
   showButton: boolean;
@@ -117,6 +118,10 @@ const Home: React.FC = () => {
       </AnimatedSection>
       <AnimatedSection id="testimonials">
         <Testimonials />
+      </AnimatedSection>
+
+      <AnimatedSection id="faq">
+        <FAQ />
       </AnimatedSection>
 
       <WhatsAppButton
