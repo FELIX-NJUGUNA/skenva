@@ -182,6 +182,7 @@ const Header: React.FC = () => {
         <a href="#services" onClick={(e) => { e.preventDefault(); scrollToSection("#services"); }}>Services</a>
         <a href="#portfolio" onClick={(e) => { e.preventDefault(); scrollToSection("#portfolio"); }}>Portfolio</a>
         <a href="#testimonials" onClick={(e) => { e.preventDefault(); scrollToSection("#testimonials"); }}>Testimonials</a>
+        <a href="#faq" onClick={(e) => { e.preventDefault(); scrollToSection("#faq"); }}>FAQs</a>
         <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection("#contact"); }}>Contact</a>
       </Nav>
 
@@ -195,6 +196,7 @@ const Header: React.FC = () => {
       <a href="#services" onClick={(e) => { e.preventDefault(); scrollToSection("#services"); setMenuOpen(false); }}>Services</a>
       <a href="#portfolio" onClick={(e) => { e.preventDefault(); scrollToSection("#portfolio"); setMenuOpen(false); }}>Portfolio</a>
       <a href="#testimonials" onClick={(e) => { e.preventDefault(); scrollToSection("#testimonials"); setMenuOpen(false); }}>Testimonials</a>
+      <a href="#faq" onClick={(e) => { e.preventDefault(); scrollToSection("#faq"); setMenuOpen(false); }}>FAQs</a>
       <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection("#contact"); setMenuOpen(false); }}>Contact</a>
       </MobileNav>
     </HeaderContainer>

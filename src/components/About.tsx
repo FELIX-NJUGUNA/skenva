@@ -3,16 +3,21 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import Slider from "react-slick";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPalette, faLaptopCode, faChartLine, faPhotoVideo } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPalette,
+  faLaptopCode,
+  faChartLine,
+  faPhotoVideo,
+} from "@fortawesome/free-solid-svg-icons";
 import { colors } from "../assets/styles/colors";
 import about1 from "../assets/images/about1.webp";
-//import about2 from "../assets/images/about2.jpg";
 import about3 from "../assets/images/about3.webp";
 import about4 from "../assets/images/about5.webp";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const aboutImages = [about1, about3,about4];
+// === Assets ===
+const aboutImages = [about1, about3, about4];
 
 const sliderSettings = {
   dots: false,
@@ -23,10 +28,13 @@ const sliderSettings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   arrows: false,
-  
 };
 
-const AboutSection = styled.section`
+// === Styled Components ===
+const AboutSection = styled.section.attrs(() => ({
+  role: "region",
+  "aria-label": "About SkenVa Creatives section",
+}))`
   position: relative;
   font-family: "Montserrat", sans-serif;
   overflow: hidden;
@@ -61,7 +69,7 @@ const AnimatedBlob = styled.div`
   }
 `;
 
-const AboutContainer = styled(motion.div)`
+const AboutContainer = styled(motion.article)`
   z-index: 1;
   display: flex;
   flex-direction: row;
@@ -88,7 +96,7 @@ const AboutContainer = styled(motion.div)`
 const TextContent = styled.div`
   flex: 1;
 
-  h2 {
+  h1 {
     font-size: 3rem;
     font-weight: 800;
     color: #ffffff;
@@ -122,11 +130,10 @@ const TextContent = styled.div`
   }
 `;
 
-const ImageContainer = styled(motion.div)`
+const ImageContainer = styled(motion.figure)`
   flex: 1;
   max-width: 500px;
   width: 100%;
-  height: auto;
   aspect-ratio: 16/9;
   border-radius: 20px;
   overflow: hidden;
@@ -138,14 +145,10 @@ const ImageContainer = styled(motion.div)`
     box-shadow: 0px 22px 40px rgba(255, 255, 255, 0.3);
   }
 
-  .slick-slider {
-    margin-bottom: 0 !important;
-  }
-
   .slick-slide img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 20px;
     transition: transform 0.5s ease-in-out;
     display: block;
@@ -154,25 +157,7 @@ const ImageContainer = styled(motion.div)`
       transform: scale(1.02);
     }
   }
-
-  
-
-  @media (max-width: 1024px) {
-    max-width: 400px;
-    height: 320px;
-  }
-
-  @media (max-width: 768px) {
-    max-width: 320px;
-    height: 280px;
-  }
-
-  @media (max-width: 480px) {
-    max-width: 260px;
-    height: 220px;
-  }
 `;
-
 
 const ServicesSection = styled(motion.section)`
   margin-top: 100px;
@@ -205,7 +190,7 @@ const ServicesGrid = styled.div`
   }
 `;
 
-const ServiceCard = styled(motion.div)`
+const ServiceCard = styled(motion.article)`
   background: rgba(255, 255, 255, 0.1);
   padding: 35px;
   border-radius: 20px;
@@ -243,10 +228,11 @@ const ServiceIcon = styled(FontAwesomeIcon)`
   }
 `;
 
+// === Main Component ===
 const About: React.FC = () => {
   return (
     <AboutSection>
-      {/* Floating Background Blobs */}
+      {/* Decorative Floating Backgrounds */}
       <AnimatedBlob style={{ top: "-100px", left: "-120px" }}>
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -268,16 +254,19 @@ const About: React.FC = () => {
       </AnimatedBlob>
 
       <ServiceTitle>About SkenVa Creatives</ServiceTitle>
+
       <AboutContainer>
         <TextContent>
-          <h2>Igniting SME Growth</h2>
-          <p>We specialize in branding and digital marketing solutions that drive measurable impact, creativity, and brand transformation.</p>
+          <h1>Igniting SME Growth through Branding & Marketing</h1>
+          <p>
+            At SkenVa Creatives, we specialize in digital marketing, brand identity, and visual content creation. Our solutions spark growth, enhance brand recognition, and elevate your business online.
+          </p>
         </TextContent>
         <ImageContainer>
           <Slider {...sliderSettings}>
             {aboutImages.map((imgSrc, index) => (
               <div key={index}>
-                <img src={imgSrc} alt={`About us ${index + 1}`} />
+                <img src={imgSrc} alt={`SkenVa Creative team showcasing project ${index + 1}`} />
               </div>
             ))}
           </Slider>
@@ -285,15 +274,15 @@ const About: React.FC = () => {
       </AboutContainer>
 
       <ServicesSection>
-        <ServiceTitle>What We Do</ServiceTitle>
+        <ServiceTitle>Our Creative Services</ServiceTitle>
         <ServicesGrid>
           <ServiceCard>
             <ServiceIcon icon={faPalette} />
             <h3>Brand Identity</h3>
             <p>We craft visually stunning branding solutions to boost your company’s identity.</p>
           </ServiceCard>
-          <ServiceCard style={{ border: `2px solid ${colors.limeGreen}`, transform: "scale(1.05)" }}>
-            <ServiceIcon icon={faChartLine} style={{ fontSize: "4rem", color: colors.limeGreen }} />
+          <ServiceCard>
+            <ServiceIcon icon={faChartLine} />
             <h3>Social Media Management</h3>
             <p>We manage, grow, and elevate your social presence like never before.</p>
           </ServiceCard>

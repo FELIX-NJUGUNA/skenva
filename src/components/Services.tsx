@@ -4,6 +4,10 @@ import { colors } from "../assets/styles/colors";
 import ServiceCard from "../components/ServiceCard";
 import BookingModal from "../components/BookingModal";
 import { FaPaintBrush, FaFacebook, FaGlobe, FaSearch } from "react-icons/fa";
+import service1 from "../assets/images/designservice.webp";
+import service2 from "../assets/images/smservice.webp"
+import service3 from "../assets/images/wbservice.webp"
+import service4 from "../assets/images/seoservice.webp"
 
 // Container for the entire services section
 const ServicesContainer = styled.section`
@@ -156,18 +160,21 @@ const Services: React.FC = () => {
 
       <CardsWrapper>
         <ServiceCard
+          image= {service1}
           title="Graphic Design"
           services={graphicDesignServices}
           icon={<FaPaintBrush />}
           accentColor={colors.royalBlue}
         />
         <ServiceCard
+          image= {service2}
           title="Social Media Management"
           services={socialMediaServices}
           icon={<FaFacebook />}
           accentColor={colors.limeGreen}
         />
         <ServiceCard
+          image= {service3}
           title="Web & Branding"
           services={webBrandingServices}
           icon={<FaGlobe />}
@@ -175,6 +182,7 @@ const Services: React.FC = () => {
         />
 
         <ServiceCard
+          image= {service4}
           title="SEO Services"
           services={seoServices}
           icon={<FaSearch />}

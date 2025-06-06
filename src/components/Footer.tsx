@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { colors } from "../assets/styles/colors";
 
 const FooterWrapper = styled.footer`
-  background: linear-gradient(135deg, #0908c3, ${colors.royalBlue}); /* Updated gradient */
+  background: linear-gradient(135deg, ${colors.royalBlue}, #001d6e);
   color: white;
   z-index: 0;
   padding: 80px 20px 0;
@@ -54,16 +54,16 @@ const LeftColumn = styled.div`
 const ContactFormContainer = styled(motion.div)`
   flex: 1;
   padding: 30px;
-  background: rgba(255, 255, 255, 0.15); /* Lighter visibility */
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 12px;
-  backdrop-filter: blur(8px); /* Softer blur */
+  backdrop-filter: blur(8px);
   box-shadow: 0 8px 24px rgba(255, 255, 255, 0.12);
 `;
 
 const ContactForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 18px; /* Increased spacing */
+  gap: 18px;
 `;
 
 const Title = styled.h3`
@@ -72,7 +72,6 @@ const Title = styled.h3`
   color: ${colors.white};
   margin-bottom: 20px;
 `;
-
 
 const Input = styled.input`
   width: 97%;
@@ -83,11 +82,10 @@ const Input = styled.input`
   color: white;
   outline: none;
   font-family: "Montserrat", sans-serif;
-  margin-bottom: 10px;
   transition: box-shadow 0.3s ease-in-out;
 
   &:focus {
-    box-shadow: 0 0 12px ${colors.limeGreen}; /* Subtle glow */
+    box-shadow: 0 0 12px ${colors.limeGreen};
     border-color: ${colors.limeGreen};
   }
 
@@ -105,11 +103,10 @@ const TextArea = styled.textarea`
   color: white;
   outline: none;
   font-family: "Montserrat", sans-serif;
-  margin-bottom: 10px;
   transition: box-shadow 0.3s ease-in-out;
 
   &:focus {
-    box-shadow: 0 0 12px ${colors.limeGreen}; /* Subtle glow */
+    box-shadow: 0 0 12px ${colors.limeGreen};
     border-color: ${colors.limeGreen};
   }
 
@@ -117,7 +114,6 @@ const TextArea = styled.textarea`
     color: rgba(255, 255, 255, 0.7);
   }
 `;
-
 
 const Button = styled.button`
   background-color: ${colors.limeGreen};
@@ -156,12 +152,21 @@ const SocialIcon = styled(motion.a)`
   }
 `;
 
-const CopyrightSection = styled.div`
- background: linear-gradient(135deg, ${colors.royalBlue} , #001d6e);
-  padding: 16px 0;
-  text-align: center;
+const CopyrightSection = styled(motion.div)`
+  background: linear-gradient(135deg, ${colors.royalBlue}, #001d6e);
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: white;
   font-size: 14px;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
 `;
 
 const Footer: React.FC = () => {
@@ -193,7 +198,11 @@ const Footer: React.FC = () => {
     <>
       <FooterWrapper>
         <ToastContainer />
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+        >
           <FooterContent>
             <LeftColumn>
               <div>
@@ -206,7 +215,7 @@ const Footer: React.FC = () => {
               <div>
                 <Title>Follow Us</Title>
                 <SocialLinks>
-                  <SocialIcon href="https://facebook.com/skenvacreatives" target="_blank"  whileHover={{ scale: 1.2, y: -3 }}>
+                  <SocialIcon href="https://facebook.com/skenvacreatives" target="_blank" whileHover={{ scale: 1.2, y: -3 }}>
                     <FontAwesomeIcon icon={faFacebook} />
                   </SocialIcon>
                   <SocialIcon href="https://twitter.com/skenvacreatives" target="_blank" whileHover={{ scale: 1.2, y: -3 }}>
@@ -222,7 +231,12 @@ const Footer: React.FC = () => {
               </div>
             </LeftColumn>
 
-            <ContactFormContainer initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
+            <ContactFormContainer
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+            >
               <Title>Get In Touch</Title>
               <ContactForm onSubmit={handleSubmit}>
                 <Input name="name" type="text" placeholder="Your Name" required />
@@ -234,8 +248,14 @@ const Footer: React.FC = () => {
           </FooterContent>
         </motion.div>
       </FooterWrapper>
-      <CopyrightSection>
-        © 2025 SkenVa Creatives. All Rights Reserved.
+
+      <CopyrightSection
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div>© {new Date().getFullYear()}</div>
+        <div>SkenVa Creatives. All Rights Reserved.</div>
       </CopyrightSection>
     </>
   );

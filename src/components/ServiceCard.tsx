@@ -1,112 +1,109 @@
-import React from "react";
-import styled, { keyframes } from "styled-components";
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+
+interface Service {
+  name: string;
+  price: string;
+}
 
 interface ServiceCardProps {
   title: string;
-  services: { name: string; price: string }[];
+  services: Service[];
   icon: React.ReactNode;
-  accentColor?: string;
+  image?: string;
+  accentColor: string;
 }
 
-const DEFAULT_ACCENT = "#0038ff";
-
-// Blob float animation
-const floatBlob = keyframes`
-  0% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.4;
-  }
-  50% {
-    transform: translate(20px, -10px) scale(1.1);
-    opacity: 0.25;
-  }
-  100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.4;
-  }
-`;
-
-const Card = styled.div<{ accentColor?: string }>`
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 2.5rem 2rem;
-  width: 320px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+const Card = styled(motion.div)<{ accentColor: string }>`
+  background: linear-gradient(135deg, ${({ accentColor }) => accentColor} 0%, #000000 100%);
+  color: #fff;
   position: relative;
   overflow: hidden;
-  color: white;
-  transition: all 0.3s ease-in-out;
+  border-radius: 20px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 350px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
 
   &:hover {
     transform: translateY(-8px);
-    box-shadow: 0 25px 50px ${({ accentColor }) => accentColor || DEFAULT_ACCENT}88;
   }
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: -4px;
-    right: -4px;
-    bottom: -4px;
-    left: -4px;
-    border-radius: 24px;
-    background: ${({ accentColor }) =>
-      `linear-gradient(135deg, ${accentColor || DEFAULT_ACCENT}, #ffffff22)`};
-    z-index: -2;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: -60px;
-    right: -60px;
-    width: 200px;
-    height: 200px;
-    background: ${({ accentColor }) => accentColor || DEFAULT_ACCENT};
-    opacity: 0.2;
-    filter: blur(80px);
-    border-radius: 50%;
-    animation: ${floatBlob} 6s ease-in-out infinite;
-    z-index: -3;
+  @media (hover: hover) {
+    &:hover .view-button {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 `;
 
-const IconWrapper = styled.div<{ accentColor?: string }>`
-  width: 60px;
-  height: 60px;
-  background: ${({ accentColor }) => accentColor || DEFAULT_ACCENT};
-  color: white;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: 1.8rem;
-  margin: 0 auto 1rem;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+const ImageOverlay = styled.div<{ image?: string }>`
+  background: ${({ image }) =>
+    image
+      ? `url(${image}) center/cover no-repeat`
+      : "linear-gradient(to right, rgba(255,255,255,0.1), rgba(0,0,0,0.1))"};
+  position: absolute;
+  opacity: 0.1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
+
+const IconWrapper = styled.div`
+  font-size: 3rem;
+  z-index: 1;
+  position: relative;
 `;
 
 const Title = styled.h3`
-  font-size: 1.6rem;
-  margin-bottom: 1.5rem;
-  color: white;
+  font-size: 1.8rem;
+  margin: 1rem 0 0.5rem;
+  z-index: 1;
+  position: relative;
 `;
 
-const ServiceList = styled.ul`
+const DetailsWrapper = styled.div`
+  margin-top: 1rem;
+`;
+
+const ServicesList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
 `;
 
-const ServiceItem = styled.li`
-  margin-bottom: 1rem;
+const ServiceItem = styled(motion.li)`
   font-size: 1rem;
-  color: #e0e8ff;
+  margin-bottom: 0.5rem;
+`;
 
-  span {
-    display: block;
-    font-weight: 600;
-    color: #ffffff;
+const ViewMoreButton = styled.button`
+  margin-top: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(10px);
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+
+  &.view-button {
+    position: relative;
+    z-index: 1;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
   }
 `;
 
@@ -114,20 +111,72 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   title,
   services,
   icon,
-  accentColor = DEFAULT_ACCENT,
+  image,
+  accentColor,
 }) => {
+  const { ref, inView } = useInView({
+    threshold: 0.3,
+    triggerOnce: true,
+  });
+
+  const [showDetails, setShowDetails] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect screen size for responsive behavior
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const detailsVisible = isMobile || showDetails;
+
   return (
-    <Card accentColor={accentColor}>
-      <IconWrapper accentColor={accentColor}>{icon}</IconWrapper>
+    <Card
+      ref={ref}
+      accentColor={accentColor}
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
+      <ImageOverlay image={image} />
+      <IconWrapper>{icon}</IconWrapper>
       <Title>{title}</Title>
-      <ServiceList>
-        {services.map((service, index) => (
-          <ServiceItem key={index}>
-            <span>{service.name}</span>
-            {service.price}
-          </ServiceItem>
-        ))}
-      </ServiceList>
+
+      <DetailsWrapper>
+        <div
+          style={{
+            opacity: detailsVisible ? 1 : 0,
+            transform: detailsVisible ? "translateY(0)" : "translateY(20px)",
+            maxHeight: detailsVisible ? "400px" : "0",
+            overflow: "hidden",
+            transition: "all 0.5s ease",
+          }}
+        >
+          <ServicesList>
+            {services.map((service, index) => (
+              <ServiceItem
+                key={index}
+                initial={{ opacity: 0, x: -10 }}
+                animate={inView && detailsVisible ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 0.1 * index, duration: 0.3 }}
+              >
+                {service.name} – <strong>{service.price}</strong>
+              </ServiceItem>
+            ))}
+          </ServicesList>
+        </div>
+        {!isMobile && (
+          <ViewMoreButton
+            onClick={() => setShowDetails(!showDetails)}
+            className="view-button"
+            aria-expanded={detailsVisible}
+          >
+            {detailsVisible ? "Hide" : "View More"}
+          </ViewMoreButton>
+        )}
+      </DetailsWrapper>
     </Card>
   );
 };

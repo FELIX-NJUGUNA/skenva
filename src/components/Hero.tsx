@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { motion, AnimatePresence } from "framer-motion";
-import { colors } from "../assets/styles/colors";
+import { motion } from "framer-motion";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { colors } from "../assets/styles/colors";
+
 import heroImage1 from "../assets/images/webdesign.webp";
 import heroImage2 from "../assets/images/design.webp";
 import heroImage3 from "../assets/images/marketing.webp";
-import heroImage4 from "../assets/images/about4.webp";// Assuming you have a utility function for preloading images
+import heroImage4 from "../assets/images/about4.webp";
 
-const preloadImages = async (imagePaths: string[]) => {
+// Helper to preload images
+const preloadImages = async (srcs: string[]) => {
   await Promise.all(
-    imagePaths.map((src) => {
+    srcs.map((src) => {
       return new Promise((resolve) => {
         const img = new Image();
         img.src = src;
@@ -19,7 +21,6 @@ const preloadImages = async (imagePaths: string[]) => {
     })
   );
 };
-
 
 const handleScroll = (id: string) => {
   const section = document.querySelector(id);
@@ -31,57 +32,44 @@ const handleScroll = (id: string) => {
 const HeroContainer = styled.section`
   height: 100dvh;
   width: 100%;
-  z-index: 0;
-  margin: 0;
-  padding: 0;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
 `;
 
-const ImageWrapper = styled(motion.div)`
+const ImageLayer = styled(motion.div)<{ bg: string }>`
   position: absolute;
   width: 100%;
-  height: 100dvh;
+  height: 100%;
+  background-image: url(${(props) => props.bg});
   background-size: cover;
   background-position: center;
   z-index: 0;
+  will-change: opacity, transform, filter;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 
   &::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     background: rgba(0, 0, 0, 0.6);
     z-index: 1;
-  }
-
-   @media (max-width: 768px) {
-    height: 100%
-  }
-
-  @media (max-width: 480px) {
-    height: 100%
   }
 `;
 
 const ContentWrapper = styled.div`
   position: relative;
   z-index: 2;
+  height: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  max-width: 900px;
-  padding: 0 1rem;
   text-align: center;
+  padding: 0 1rem;
+`;
 
-  @media (max-width: 768px) {
-    max-width: 95%;
-  }
+const ContentBox = styled.div`
+  max-width: 900px;
 `;
 
 const Heading = styled(motion.h1)`
@@ -102,17 +90,15 @@ const Subheading = styled(motion.p)`
   font-weight: 400;
   margin-bottom: 20px;
   text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.6);
-
-  @media (max-width: 768px) {
-    font-size: 1.2rem;
-  }
 `;
 
 const Description = styled(motion.p)`
   color: white;
   font-size: 1.1rem;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
   text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.7);
 
   @media (max-width: 768px) {
@@ -123,10 +109,9 @@ const Description = styled(motion.p)`
 
 const CTAContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
-  margin-top: 20px;
+  flex-wrap: wrap;
 `;
 
 const CTAButton = styled(motion.button)`
@@ -144,7 +129,6 @@ const CTAButton = styled(motion.button)`
   &:hover {
     background: ${colors.limeGreen};
     transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   }
 
   &:nth-child(2) {
@@ -173,17 +157,15 @@ const ArrowButton = styled.button`
 
   ${HeroContainer}:hover & {
     opacity: 1;
-    transform: translateY(-50%) scale(1.1);
   }
 
   @media (max-width: 768px) {
     opacity: 1;
-    padding: 10px;
   }
 
   &:hover {
     background: ${colors.limeGreen};
-    transform: scale(1.15);
+    transform: translateY(-50%) scale(1.15);
   }
 `;
 
@@ -219,7 +201,7 @@ const Hero: React.FC = () => {
         "Increase visibility and boost sales with top-tier SEO and marketing strategies. We optimize your presence to ensure sustainable growth.",
     },
     {
-      image: heroImage4, 
+      image: heroImage4,
       heading: "Strategic Social Media Management",
       subheading: "Engagement & Growth",
       description:
@@ -228,52 +210,95 @@ const Hero: React.FC = () => {
   ];
 
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [previousSlideIndex, setPreviousSlideIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    preloadImages(slides.map((slide) => slide.image)); // Preload all images
+    preloadImages(slides.map((slide) => slide.image));
   }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
+      setPreviousSlideIndex(currentSlideIndex);
       setCurrentSlideIndex((prevIndex) => (prevIndex + 1) % slides.length);
     }, 8000);
     return () => clearInterval(interval);
-  }, [slides.length]);
+  }, [currentSlideIndex]);
+
+  const currentSlide = slides[currentSlideIndex];
+  const previousSlide = previousSlideIndex !== null ? slides[previousSlideIndex] : null;
 
   return (
     <HeroContainer>
-      <AnimatePresence mode="wait">
-        <ImageWrapper
-          key={slides[currentSlideIndex].image}
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 1.0, ease: "easeInOut" }}
-          style={{ backgroundImage: `url(${slides[currentSlideIndex].image})` }}
+      {previousSlide && (
+        <ImageLayer
+          bg={previousSlide.image}
+          initial={{ opacity: 1, scale: 1 }}
+          animate={{ opacity: 0, scale: 1.02 }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
         />
-      </AnimatePresence>
+      )}
+      <ImageLayer
+        bg={currentSlide.image}
+        initial={{ opacity: 0, scale: 1.02 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.5, ease: "easeInOut" }}
+      />
 
       <ContentWrapper>
-        <Heading
-          key={slides[currentSlideIndex].heading}
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          {slides[currentSlideIndex].heading}
-        </Heading>
-        <Subheading>{slides[currentSlideIndex].subheading}</Subheading>
-        <Description>{slides[currentSlideIndex].description}</Description>
-        <CTAContainer>
-          <CTAButton onClick={() => handleScroll("#services")}>Explore Services</CTAButton>
-          <CTAButton onClick={() => handleScroll("#contact")}>Get in Touch</CTAButton>
-        </CTAContainer>;
+        <ContentBox>
+          <Heading
+            key={currentSlide.heading}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+          >
+            {currentSlide.heading}
+          </Heading>
+          <Subheading
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            {currentSlide.subheading}
+          </Subheading>
+          <Description
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            {currentSlide.description}
+          </Description>
+          <CTAContainer>
+            <CTAButton
+              whileHover={{ scale: 1.05 }}
+              onClick={() => handleScroll("#services")}
+            >
+              Explore Services
+            </CTAButton>
+            <CTAButton
+              whileHover={{ scale: 1.05 }}
+              onClick={() => handleScroll("#contact")}
+            >
+              Get in Touch
+            </CTAButton>
+          </CTAContainer>
+        </ContentBox>
       </ContentWrapper>
 
-      <LeftButton onClick={() => setCurrentSlideIndex((prev) => (prev - 1 + slides.length) % slides.length)}>
+      <LeftButton
+        onClick={() => {
+          setPreviousSlideIndex(currentSlideIndex);
+          setCurrentSlideIndex((prev) => (prev - 1 + slides.length) % slides.length);
+        }}
+      >
         <FaArrowLeft />
       </LeftButton>
-      <RightButton onClick={() => setCurrentSlideIndex((prev) => (prev + 1) % slides.length)}>
+      <RightButton
+        onClick={() => {
+          setPreviousSlideIndex(currentSlideIndex);
+          setCurrentSlideIndex((prev) => (prev + 1) % slides.length);
+        }}
+      >
         <FaArrowRight />
       </RightButton>
     </HeroContainer>
