@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { colors } from "../assets/styles/colors";
 
 interface Service {
   name: string;
@@ -57,6 +58,7 @@ const IconWrapper = styled.div`
   font-size: 3rem;
   z-index: 1;
   position: relative;
+  color: ${colors.limeGreen};
 `;
 
 const Title = styled.h3`
@@ -64,6 +66,7 @@ const Title = styled.h3`
   margin: 1rem 0 0.5rem;
   z-index: 1;
   position: relative;
+  color: ${colors.lightBlue};
 `;
 
 const DetailsWrapper = styled.div`

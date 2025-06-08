@@ -12,6 +12,7 @@ const HeaderContainer = styled(motion.header)<{ isScrolled: boolean; isHidden: b
   position: fixed;
   width: 95%;
   z-index: 10;
+  margin-top: 30px;
   max-width: 1100px;
   top: ${({ isHidden }) => (isHidden ? "-100px" : "30px")};
   left: 50%;
@@ -23,10 +24,10 @@ const HeaderContainer = styled(motion.header)<{ isScrolled: boolean; isHidden: b
   transition: all 0.5s ease-in-out;
   box-shadow: ${({ isScrolled }) => (isScrolled ? "0px 4px 12px rgba(0, 0, 0, 0.1)" : "0px 8px 20px rgba(0, 0, 0, 0.15)")};
 
-  @media (max-width: 768px) {
+    @media (max-width: 768px) {
     width: 100%;
     border-radius: 0;
-    top: 0; /* Keep it fixed for mobile */
+    margin-top: 80px; 
     left: 0;
     transform: none;
     background: rgba(255, 255, 255, 0.85);
@@ -181,6 +182,7 @@ const Header: React.FC = () => {
         <a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection("#about"); }}>About</a>
         <a href="#services" onClick={(e) => { e.preventDefault(); scrollToSection("#services"); }}>Services</a>
         <a href="#portfolio" onClick={(e) => { e.preventDefault(); scrollToSection("#portfolio"); }}>Portfolio</a>
+        <a href="#partners" onClick={(e) => {e.preventDefault(); scrollToSection("#partners");}}>Partners</a>
         <a href="#testimonials" onClick={(e) => { e.preventDefault(); scrollToSection("#testimonials"); }}>Testimonials</a>
         <a href="#faq" onClick={(e) => { e.preventDefault(); scrollToSection("#faq"); }}>FAQs</a>
         <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection("#contact"); }}>Contact</a>
@@ -195,6 +197,7 @@ const Header: React.FC = () => {
       <a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection("#about"); setMenuOpen(false); }}>About</a>
       <a href="#services" onClick={(e) => { e.preventDefault(); scrollToSection("#services"); setMenuOpen(false); }}>Services</a>
       <a href="#portfolio" onClick={(e) => { e.preventDefault(); scrollToSection("#portfolio"); setMenuOpen(false); }}>Portfolio</a>
+      <a href="#partners" onClick={(e) => { e.preventDefault(); scrollToSection("#partners"); setMenuOpen(false); }}>Partners</a>
       <a href="#testimonials" onClick={(e) => { e.preventDefault(); scrollToSection("#testimonials"); setMenuOpen(false); }}>Testimonials</a>
       <a href="#faq" onClick={(e) => { e.preventDefault(); scrollToSection("#faq"); setMenuOpen(false); }}>FAQs</a>
       <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection("#contact"); setMenuOpen(false); }}>Contact</a>

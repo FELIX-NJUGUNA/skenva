@@ -99,7 +99,7 @@ const TextContent = styled.div`
   h1 {
     font-size: 3rem;
     font-weight: 800;
-    color: #ffffff;
+    color: ${colors.limeGreen};
     margin-bottom: 20px;
     line-height: 1.2;
 
@@ -114,7 +114,7 @@ const TextContent = styled.div`
 
   p {
     font-size: 1.4rem;
-    color: #dbeeff;
+    color: ${colors.lightBlue};
     line-height: 1.9;
     max-width: 600px;
 
@@ -170,7 +170,7 @@ const ServicesSection = styled(motion.section)`
 const ServiceTitle = styled.h2`
   font-size: 2.8rem;
   font-weight: 800;
-  color: #ffffff;
+  color: ${colors.lightBlue};
   margin-bottom: 60px;
 `;
 
@@ -206,13 +206,13 @@ const ServiceCard = styled(motion.article)`
   h3 {
     font-size: 1.9rem;
     font-weight: 600;
-    color: #ffffff;
+    color: ${colors.limeGreen};
     margin-bottom: 10px;
   }
 
   p {
     font-size: 1.2rem;
-    color: #dbeeff;
+    color: ${colors.lightBlue};
     line-height: 1.7;
   }
 `;
@@ -224,7 +224,7 @@ const ServiceIcon = styled(FontAwesomeIcon)`
   transition: color 0.3s ease-in-out;
 
   ${ServiceCard}:hover & {
-    color: ${colors.white};
+    color: ${colors.lightBlue};
   }
 `;
 

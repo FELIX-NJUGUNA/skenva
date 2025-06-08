@@ -2,10 +2,10 @@ import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { colors } from "../assets/styles/colors";
 import client1 from "../assets/images/placeholder.webp";
-import client2 from "../assets/images/placeholder.webp";
-import client3 from "../assets/images/placeholder.webp";
+import client2 from "../assets/images/artkings_prof.webp";
+import client3 from "../assets/images/lp_profile.webp";
 import client4 from "../assets/images/placeholder.webp";
-import client5 from "../assets/images/placeholder.webp";
+import client5 from "../assets/images/vb_prof.webp";
 
 const AnimatedBlob = styled.div`
   position: absolute;
@@ -182,17 +182,26 @@ const Dot = styled.div<{ active: boolean }>`
   cursor: pointer;
 `;
 
+const PersonName = styled.h4`
+  font-size: 1rem;
+  font-weight: 500;
+  color: #e0e0e0;
+  margin-top: 10px;
+  text-align: left;
+`;
+
 const Testimonials: React.FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const testimonials = [
     { name: "Idyllic", quote: "SkenVa helped us boost our sales with top-tier SEO!", img: client1, rating: 5 },
-    { name: "ArtKings Builders", quote: "Their graphic designs elevated our brand visibility!", img: client2, rating: 4 },
+    { name: "ArtKings Builders Co", person: "Danson Njoroge Njiiri", quote: "Their web and graphic designs elevated our brand visibility!", img: client2, rating: 4 },
     { name: "Legacy Pixels", quote: "Amazing branding services that transformed our online presence!", img: client3, rating: 5 },
     { name: "NextGen Solutions", quote: "Best web development experience we've had!", img: client4, rating: 4 },
-    { name: "Valuable Brands", quote: "Best service I got out of Skenva which showed huge growth to our company", img: client5, rating: 5 },
+    { name: "Valuable Brands", person: "Victor Wambani - CEO", quote: "Best service I got out of Skenva which showed huge growth to our company", img: client5, rating: 5 },
     { name: "St Kizito VTI", quote: "Great photo, video, and marketing work — very professional!", img: client1, rating: 5 },
   ];
+  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -249,13 +258,14 @@ const Testimonials: React.FC = () => {
       <TestimonialWrapper ref={wrapperRef}>
         {testimonials.map((t, index) => (
           <TestimonialCard key={index} alternate={index % 2 === 0}>
-            <ClientInfo>
-              <Image src={t.img} alt={t.name} />
-              <Name>{t.name}</Name>
-            </ClientInfo>
-            {renderStars(t.rating)}
-            <Quote>"{t.quote}"</Quote>
-          </TestimonialCard>
+              <ClientInfo>
+                <Image src={t.img} alt={t.name} />
+                <Name>{t.name}</Name>
+              </ClientInfo>
+              {renderStars(t.rating)}
+              <Quote>"{t.quote}"</Quote>
+              <PersonName>- {t.person}</PersonName>
+            </TestimonialCard>
         ))}
       </TestimonialWrapper>
       <Dots>

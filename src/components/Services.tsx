@@ -50,7 +50,7 @@ const AnimatedBlob = styled.div`
 
 const Title = styled.h1`
   font-size: 3rem;
-  color: ${colors.white};
+  color: ${colors.lightBlue};
   margin-bottom: 1rem;
   z-index: 1;
   position: relative;
@@ -171,7 +171,7 @@ const Services: React.FC = () => {
           title="Social Media Management"
           services={socialMediaServices}
           icon={<FaFacebook />}
-          accentColor={colors.limeGreen}
+          accentColor={colors.royalBlue}
         />
         <ServiceCard
           image= {service3}
@@ -186,7 +186,7 @@ const Services: React.FC = () => {
           title="SEO Services"
           services={seoServices}
           icon={<FaSearch />}
-          accentColor={colors.limeGreen}
+          accentColor={colors.royalBlue}
         />
 
       </CardsWrapper>

@@ -2,6 +2,14 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import {
+  faFacebook,
+  faXTwitter,
+  faInstagram,
+  faLinkedin,
+  faWhatsapp,
+} from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { colors } from "../assets/styles/colors";
 
 import heroImage1 from "../assets/images/webdesign.webp";
@@ -36,6 +44,86 @@ const HeroContainer = styled.section`
   position: relative;
 `;
 
+const ContactBar = styled.div`
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: #001d6e;
+  border-bottom: 2px solid ${colors.limeGreen};
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1.5rem;
+  z-index: 100;
+  font-size: 0.9rem;
+  row-gap: 0.5rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0.7rem 1rem;
+  }
+`;
+
+
+
+const ContactInfo = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+
+  a {
+    color: ${colors.limeGreen};
+    text-decoration: none;
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    text-align: center;
+  }
+`;
+
+
+
+const SocialIcons = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-left: 100px;
+
+  a {
+    color: ${colors.limeGreen};
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: ${colors.lightBlue};
+      cursor: pointer;
+    }
+  }
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+  }
+`;
+
+
+
 const ImageLayer = styled(motion.div)<{ bg: string }>`
   position: absolute;
   width: 100%;
@@ -44,9 +132,6 @@ const ImageLayer = styled(motion.div)<{ bg: string }>`
   background-size: cover;
   background-position: center;
   z-index: 0;
-  will-change: opacity, transform, filter;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
 
   &::before {
     content: "";
@@ -64,8 +149,8 @@ const ContentWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 2rem 1rem;
   text-align: center;
-  padding: 0 1rem;
 `;
 
 const ContentBox = styled.div`
@@ -229,6 +314,32 @@ const Hero: React.FC = () => {
 
   return (
     <HeroContainer>
+      <ContactBar>
+        <ContactInfo>
+          Call us:{" "}
+          <div><a href="tel:+254741553806">+254741553806/</a></div>
+          <div><a href="tel:+254719155919">+254719155919</a></div>
+        </ContactInfo>
+
+        <SocialIcons>
+          <a href="https://wa.me/254741553806" target="_blank" aria-label="WhatsApp" rel="noopener noreferrer">
+            <FontAwesomeIcon icon={faWhatsapp} />
+          </a>
+          <a href="https://www.facebook.com/share/19R96edYQy/" target="_blank" aria-label="Facebook" rel="noopener noreferrer">
+            <FontAwesomeIcon icon={faFacebook} />
+          </a>
+          <a href="https://x.com/SkenVacreatives?t=WNivIjuNztjCsCZT-8iqfQ&s=09" target="_blank" aria-label="Twitter" rel="noopener noreferrer">
+            <FontAwesomeIcon icon={faXTwitter} />
+          </a>
+          <a href="https://www.instagram.com/skenvacreatives?igsh=anh1aTBudWxpZWY5" target="_blank" aria-label="Instagram" rel="noopener noreferrer">
+            <FontAwesomeIcon icon={faInstagram} />
+          </a>
+          <a href="https://linkedin.com/company/skenvacreatives" target="_blank" aria-label="LinkedIn" rel="noopener noreferrer">
+            <FontAwesomeIcon icon={faLinkedin} />
+          </a>
+        </SocialIcons>
+      </ContactBar>
+
       {previousSlide && (
         <ImageLayer
           bg={previousSlide.image}
@@ -246,39 +357,14 @@ const Hero: React.FC = () => {
 
       <ContentWrapper>
         <ContentBox>
-          <Heading
-            key={currentSlide.heading}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            {currentSlide.heading}
-          </Heading>
-          <Subheading
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            {currentSlide.subheading}
-          </Subheading>
-          <Description
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-          >
-            {currentSlide.description}
-          </Description>
+          <Heading>{currentSlide.heading}</Heading>
+          <Subheading>{currentSlide.subheading}</Subheading>
+          <Description>{currentSlide.description}</Description>
           <CTAContainer>
-            <CTAButton
-              whileHover={{ scale: 1.05 }}
-              onClick={() => handleScroll("#services")}
-            >
+            <CTAButton whileHover={{ scale: 1.05 }} onClick={() => handleScroll("#services")}>
               Explore Services
             </CTAButton>
-            <CTAButton
-              whileHover={{ scale: 1.05 }}
-              onClick={() => handleScroll("#contact")}
-            >
+            <CTAButton whileHover={{ scale: 1.05 }} onClick={() => handleScroll("#contact")}>
               Get in Touch
             </CTAButton>
           </CTAContainer>
