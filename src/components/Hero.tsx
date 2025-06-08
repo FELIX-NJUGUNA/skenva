@@ -159,7 +159,7 @@ const ContentBox = styled.div`
 
 const Heading = styled(motion.h1)`
   font-size: 3rem;
-  color: white;
+  color: ${colors.lightBlue};
   font-weight: 800;
   margin-bottom: 20px;
   text-shadow: 4px 4px 20px rgba(0, 0, 0, 0.7);
@@ -171,15 +171,16 @@ const Heading = styled(motion.h1)`
 
 const Subheading = styled(motion.p)`
   font-size: 1.5rem;
-  color: white;
-  font-weight: 400;
+  color: ${colors.limeGreen};
+  font-weight: 700;
   margin-bottom: 20px;
   text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.6);
 `;
 
 const Description = styled(motion.p)`
-  color: white;
+  color: ${colors.lightBlue};
   font-size: 1.1rem;
+  font-weight: 500;
   margin-bottom: 30px;
   max-width: 700px;
   margin-left: auto;
