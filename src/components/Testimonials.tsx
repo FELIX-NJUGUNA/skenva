@@ -196,8 +196,8 @@ const Testimonials: React.FC = () => {
   const testimonials = [
     { name: "Idyllic", quote: "SkenVa helped us boost our sales with top-tier SEO!", img: client1, rating: 5 },
     { name: "ArtKings Builders Co", person: "Danson Njoroge Njiiri", quote: "Their web and graphic designs elevated our brand visibility!", img: client2, rating: 4 },
-    { name: "Legacy Pixels", quote: "Amazing branding services that transformed our online presence!", img: client3, rating: 5 },
-    { name: "NextGen Solutions", quote: "Best web development experience we've had!", img: client4, rating: 4 },
+    { name: "Legacy Pixels", person: "Stephen Wanjohi",quote: "Amazing branding services that transformed our online presence!", img: client3, rating: 5 },
+    { name: "NextGen Solutions", person: "Nelo the Dancer",quote: "Best web development experience we've had!", img: client4, rating: 4 },
     { name: "Valuable Brands", person: "Victor Wambani - CEO", quote: "Best service I got out of Skenva which showed huge growth to our company", img: client5, rating: 5 },
     { name: "St Kizito VTI", quote: "Great photo, video, and marketing work — very professional!", img: client1, rating: 5 },
   ];
