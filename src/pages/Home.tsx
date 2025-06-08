@@ -10,6 +10,7 @@ import { colors } from "../assets/styles/colors";
 import { FaArrowUp } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
 import FAQ from "../components/Faq";
+import Partners from "../components/Partners";
 
 interface ButtonProps {
   showButton: boolean;
@@ -116,6 +117,9 @@ const Home: React.FC = () => {
       <AnimatedSection id="portfolio">
         <Portfolio />
       </AnimatedSection>
+      <AnimatedSection id="partners">
+        <Partners />
+      </AnimatedSection>
       <AnimatedSection id="testimonials">
         <Testimonials />
       </AnimatedSection>
@@ -125,7 +129,7 @@ const Home: React.FC = () => {
       </AnimatedSection>
 
       <WhatsAppButton
-          href="https://wa.me/254741553806" /* Replace with your actual WhatsApp number */
+          href="https://wa.me/254741553806" 
           target="_blank"
           rel="noopener noreferrer"
           showButton={showButton}
