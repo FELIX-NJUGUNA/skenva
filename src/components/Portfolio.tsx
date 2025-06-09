@@ -50,7 +50,7 @@ const projects = [
     description: "Event photography and marketing.",
     tags: ["Photography", "Marketing", "Event"],
     image: project3Img,
-    liveUrl: "",
+    liveUrl: "https://stkizito.ac.ke/",
     socialLinks: [
       { platform: "photo", url: "https://1024terabox.com/s/18_7Nnspx0RcEdQ9zs8bW6Q" },
       { platform: "facebook", url: "https://www.facebook.com/stkizitovti" },
