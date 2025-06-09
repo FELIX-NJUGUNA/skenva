@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { colors } from "../assets/styles/colors";
 import {
+  FaYoutube,
   FaPhotoVideo,
   FaVideo,
   FaInstagram,
@@ -52,6 +53,8 @@ const projects = [
     liveUrl: "",
     socialLinks: [
       { platform: "photo", url: "https://1024terabox.com/s/18_7Nnspx0RcEdQ9zs8bW6Q" },
+      { platform: "facebook", url: "https://www.facebook.com/stkizitovti" },
+      { platform: "youtube", url: "https://www.youtube.com/@St.Kizitovti" },
       
     ],
   },
@@ -204,6 +207,8 @@ const getIcon = (platform: string) => {
       return <FaPhotoVideo/>;
     case "video":
       return <FaVideo />;
+    case "youtube":
+      return <FaYoutube />;
     default:
       return null;
   }
