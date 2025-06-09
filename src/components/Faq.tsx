@@ -44,7 +44,6 @@ const AnimatedBlob = styled.div`
   opacity: 0.15;
   pointer-events: none;
   animation: float 12s ease-in-out infinite;
-  
 
   @keyframes float {
     0% { transform: translateY(0px) scale(1); }
@@ -70,10 +69,30 @@ const Title = styled.h2`
   color: #fff;
   font-weight: 800;
   letter-spacing: 1px;
+  position: relative;
+  display: inline-block;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: ${colors.limeGreen};
+    border-radius: 2px;
+  }
 
   @media (max-width: 600px) {
     font-size: 1.8rem;
     margin-bottom: 24px;
+    
+    &::after {
+      width: 60px;
+      height: 3px;
+      bottom: -8px;
+    }
   }
 `;
 
@@ -92,13 +111,15 @@ const FAQWrapper = styled.div`
   }
 `;
 
-const Item = styled(motion.div)`
+const Item = styled(motion.div)<{ expanded: boolean }>`
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border-radius: 14px;
   padding: 20px;
   cursor: pointer;
-  transition: transform 0.3s ease, background 0.3s ease;
+  transition: all 0.3s ease;
+  border: ${({ expanded }) => expanded ? `1px solid ${colors.limeGreen}80` : '1px solid transparent'};
+  box-shadow: ${({ expanded }) => expanded ? `0 0 0 1px ${colors.limeGreen}40` : 'none'};
 
   &:hover {
     transform: translateY(-4px);
@@ -120,16 +141,36 @@ const QuestionText = styled.h3`
   font-size: 1.1rem;
   font-weight: 600;
   color: #fff;
+  position: relative;
+  padding-left: 16px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: ${colors.limeGreen};
+    border-radius: 50%;
+  }
 
   @media (max-width: 600px) {
     font-size: 1rem;
+    padding-left: 12px;
+
+    &::before {
+      width: 6px;
+      height: 6px;
+    }
   }
 `;
 
 const Icon = styled(FaChevronDown)<{ expanded: boolean }>`
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, color 0.3s ease;
   transform: ${({ expanded }) => (expanded ? "rotate(180deg)" : "rotate(0deg)")};
-  color: #fff;
+  color: ${({ expanded }) => (expanded ? colors.limeGreen : "#fff")};
 `;
 
 const Answer = styled(motion.p)`
@@ -137,9 +178,45 @@ const Answer = styled(motion.p)`
   font-size: 1rem;
   color: #e0e8ff;
   line-height: 1.6;
+  padding-left: 16px;
+  border-left: 2px solid ${colors.limeGreen};
 
   @media (max-width: 600px) {
     font-size: 0.9rem;
+    padding-left: 12px;
+  }
+`;
+
+const FloatingOrbs = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+`;
+
+const Orb = styled.div`
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.3;
+  
+  &:nth-child(1) {
+    width: 120px;
+    height: 120px;
+    background: ${colors.limeGreen};
+    top: 20%;
+    left: 10%;
+    animation: float 8s ease-in-out infinite;
+  }
+  
+  &:nth-child(2) {
+    width: 80px;
+    height: 80px;
+    background: ${colors.limeGreen};
+    bottom: 15%;
+    right: 15%;
+    animation: float 10s ease-in-out infinite reverse;
   }
 `;
 
@@ -163,6 +240,11 @@ const FAQ: React.FC = () => {
 
   return (
     <FAQSection>
+      <FloatingOrbs>
+        <Orb />
+        <Orb />
+      </FloatingOrbs>
+
       {/* Top Left Blob */}
       <AnimatedBlob style={{ top: "-80px", left: "-100px" }}>
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -195,6 +277,7 @@ const FAQ: React.FC = () => {
             animate={controls}
             variants={itemVariants}
             transition={{ delay: index * 0.1 }}
+            expanded={expandedIndex === index}
           >
             <QuestionRow>
               <QuestionText>{faq.question}</QuestionText>
