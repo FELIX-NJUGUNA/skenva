@@ -199,7 +199,7 @@ const Testimonials: React.FC = () => {
     { name: "Legacy Pixels", person: "Stephen Wanjohi",quote: "Amazing branding services that transformed our online presence!", img: client3, rating: 5 },
     { name: "NextGen Solutions", person: "Nelo the Dancer",quote: "Best web development experience we've had!", img: client4, rating: 4 },
     { name: "Valuable Brands", person: "Victor Wambani - CEO", quote: "Best service I got out of Skenva which showed huge growth to our company", img: client5, rating: 5 },
-    { name: "St Kizito VTI", quote: "Great photo, video, and marketing work — very professional!", img: client1, rating: 5 },
+    { name: "St Kizito VTI", person: "Peter Kimani Michuki - Coordinator", quote: "Great photo, video, and marketing work — very professional!", img: client1, rating: 5 },
   ];
   
 
