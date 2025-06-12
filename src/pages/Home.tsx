@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import AnimatedSection from "../components/AnimatedSection";
-import Hero from "../components/Hero";
-import About from "../components/About";
-import Services from "../components/Services";
-import Portfolio from "../components/Portfolio";
-import Testimonials from "../components/Testimonials";
+import Hero from "../components/Hero"; // Hero is not lazy-loaded
+// import About from "../components/About";
+// import Services from "../components/Services";
+// import Portfolio from "../components/Portfolio";
+// import Testimonials from "../components/Testimonials";
 import styled from "styled-components";
 import { colors } from "../assets/styles/colors";
 import { FaArrowUp } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
-import FAQ from "../components/Faq";
-import Partners from "../components/Partners";
+// import FAQ from "../components/Faq";
+// import Partners from "../components/Partners";
+
+// Lazy load components
+const About = lazy(() => import("../components/About"));
+const Services = lazy(() => import("../components/Services"));
+const Portfolio = lazy(() => import("../components/Portfolio"));
+const Testimonials = lazy(() => import("../components/Testimonials"));
+const FAQ = lazy(() => import("../components/Faq"));
+const Partners = lazy(() => import("../components/Partners"));
 
 interface ButtonProps {
   showButton: boolean;
@@ -109,23 +117,35 @@ const Home: React.FC = () => {
         <Hero />
       </section>
       <AnimatedSection id="about">
-        <About />
+        <Suspense fallback={<div>Loading About section...</div>}>
+          <About />
+        </Suspense>
       </AnimatedSection>
       <AnimatedSection id="services">
-        <Services />
+        <Suspense fallback={<div>Loading Services...</div>}>
+          <Services />
+        </Suspense>
       </AnimatedSection>
       <AnimatedSection id="portfolio">
-        <Portfolio />
+        <Suspense fallback={<div>Loading Portfolio...</div>}>
+          <Portfolio />
+        </Suspense>
       </AnimatedSection>
       <AnimatedSection id="partners">
-        <Partners />
+        <Suspense fallback={<div>Loading Partners...</div>}>
+          <Partners />
+        </Suspense>
       </AnimatedSection>
       <AnimatedSection id="testimonials">
-        <Testimonials />
+        <Suspense fallback={<div>Loading Testimonials...</div>}>
+          <Testimonials />
+        </Suspense>
       </AnimatedSection>
 
       <AnimatedSection id="faq">
-        <FAQ />
+        <Suspense fallback={<div>Loading FAQ...</div>}>
+          <FAQ />
+        </Suspense>
       </AnimatedSection>
 
       <WhatsAppButton

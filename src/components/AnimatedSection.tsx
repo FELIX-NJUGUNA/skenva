@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react"; // Removed useEffect, useState
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { useInView } from 'react-intersection-observer';
 
 const SectionContainer = styled(motion.section)` // Changed from div to section
-  opacity: 0;
-  transform: translateY(50px);
-  transition: 0.8s ease-in-out;
+  // opacity: 0; // Framer Motion handles initial state
+  // transform: translateY(50px); // Framer Motion handles initial state
+  // transition: 0.8s ease-in-out; // This might conflict or be redundant with Framer Motion's transition
 `;
 
 interface AnimatedSectionProps {
@@ -14,28 +15,18 @@ interface AnimatedSectionProps {
 }
 
 const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, id }) => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const triggerPoint = windowHeight * 0.8;
-
-      if (scrollY > triggerPoint) {
-        setIsVisible(true);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const { ref, inView } = useInView({
+    triggerOnce: true, // Keeps the animation triggered once
+    threshold: 0.1,    // Trigger when 10% of the element is visible
+  });
 
   return (
     <SectionContainer
+      ref={ref} // Attach the ref here
       id={id} // Added ID to the SectionContainer
       initial={{ opacity: 0, y: 50 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : {}}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }} // Use inView directly
+      transition={{ duration: 0.8, ease: "easeOut" }} // Define transition in Framer Motion
     >
       {children}
     </SectionContainer>

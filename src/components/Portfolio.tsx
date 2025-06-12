@@ -228,7 +228,7 @@ const Projects: React.FC = () => {
         <Grid>
           {projects.map((project, i) => (
             <Card key={i}>
-              <Thumbnail src={project.image} alt={project.title} />
+              <Thumbnail src={project.image} alt={project.title} loading="lazy" />
               <Content>
                 <ProjectTitle>{project.title}</ProjectTitle>
                 <Description>{project.description}</Description>
@@ -258,7 +258,7 @@ const Projects: React.FC = () => {
         <MobileSlider>
           <SlideWrapper>
             <Card>
-              <Thumbnail src={projects[slide].image} alt={projects[slide].title} />
+              <Thumbnail src={projects[slide].image} alt={projects[slide].title} loading="lazy" />
               <Content>
                 <ProjectTitle>{projects[slide].title}</ProjectTitle>
                 <Description>{projects[slide].description}</Description>
