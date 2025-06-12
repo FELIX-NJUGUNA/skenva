@@ -339,7 +339,8 @@ You can find templates for common licenses at [choosealicense.com](https://choos
 
 If you have any questions, feedback, or would like to discuss a project, feel free to reach out:
 
--   **Project Maintainer:** FELIX-NJUGUNA *(Please update with your preferred contact name or organization)*
+-   **Project Maintainer:** FELIX-NJUGUNA *(felixnjuguna443@gmail.com)
+-   
 -   **Email:** `your-email@example.com` *(Update with your actual contact email)*
 -   **GitHub Issues:** For bugs, feature requests, or technical support, please open an issue [here](https://github.com/FELIX-NJUGUNA/skenva/issues).
 -   **Project Repository:** [Skenva on GitHub](https://github.com/FELIX-NJUGUNA/skenva)
