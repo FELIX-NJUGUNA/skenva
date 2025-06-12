@@ -28,6 +28,7 @@ const sliderSettings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   arrows: false,
+  lazyLoad: 'ondemand',
 };
 
 // === Styled Components ===
@@ -266,7 +267,10 @@ const About: React.FC = () => {
           <Slider {...sliderSettings}>
             {aboutImages.map((imgSrc, index) => (
               <div key={index}>
-                <img src={imgSrc} alt={`SkenVa Creative team showcasing project ${index + 1}`} />
+                <img
+                  src={imgSrc}
+                  alt={`SkenVa Creative team showcasing project ${index + 1}`} // TODO: Replace with more descriptive alt text based on the actual image content. E.g., "Skenva team collaborating on a design project" or "Modern office workspace at Skenva Creatives".
+                />
               </div>
             ))}
           </Slider>

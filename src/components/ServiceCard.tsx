@@ -41,18 +41,7 @@ const Card = styled(motion.div)<{ accentColor: string }>`
   }
 `;
 
-const ImageOverlay = styled.div<{ image?: string }>`
-  background: ${({ image }) =>
-    image
-      ? `url(${image}) center/cover no-repeat`
-      : "linear-gradient(to right, rgba(255,255,255,0.1), rgba(0,0,0,0.1))"};
-  position: absolute;
-  opacity: 0.1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-`;
+// ImageOverlay styled component removed
 
 const IconWrapper = styled.div`
   font-size: 3rem;
@@ -143,7 +132,24 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <ImageOverlay image={image} />
+      {image && (
+        <img
+          src={image}
+          alt={`Visual representation of ${title}`}
+          loading="lazy"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            opacity: 0.1,
+            borderRadius: '20px', // Explicitly match Card's border-radius
+            zIndex: 0
+          }}
+        />
+      )}
       <IconWrapper>{icon}</IconWrapper>
       <Title>{title}</Title>
 
