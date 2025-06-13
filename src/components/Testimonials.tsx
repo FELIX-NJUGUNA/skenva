@@ -4,7 +4,6 @@ import { colors } from "../assets/styles/colors";
 import client1 from "../assets/images/placeholder.webp";
 import client2 from "../assets/images/artkings_prof.webp";
 import client3 from "../assets/images/lp_profile.webp";
-import client4 from "../assets/images/placeholder.webp";
 import client5 from "../assets/images/vb_prof.webp";
 
 const AnimatedBlob = styled.div`
@@ -197,7 +196,6 @@ const Testimonials: React.FC = () => {
     { name: "Idyllic", quote: "SkenVa helped us boost our sales with top-tier SEO!", img: client1, rating: 5 },
     { name: "ArtKings Builders Co", person: "Danson Njoroge Njiiri", quote: "Their web and graphic designs elevated our brand visibility!", img: client2, rating: 4 },
     { name: "Legacy Pixels", person: "Stephen Wanjohi",quote: "Amazing branding services that transformed our online presence!", img: client3, rating: 5 },
-    { name: "NextGen Solutions", person: "Nelo the Dancer",quote: "Best web development experience we've had!", img: client4, rating: 4 },
     { name: "Valuable Brands", person: "Victor Wambani - CEO", quote: "Best service I got out of Skenva which showed huge growth to our company", img: client5, rating: 5 },
     { name: "St Kizito VTI", person: "Peter Kimani Michuki - Coordinator", quote: "Great photo, video, and marketing work — very professional!", img: client1, rating: 5 },
   ];
