@@ -252,21 +252,28 @@ const BookingModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOp
     return () => document.removeEventListener("keydown", esc);
   }, [isOpen]);
 
+
   useEffect(() => {
-    fetch("https://restcountries.com/v3.1/all")
+    fetch("https://countriesnow.space/api/v0.1/countries/codes")
       .then((res) => res.json())
       .then((data) => {
-        const countries = data
+        // data.data is an array of { name, dial_code, code }
+        const countries = data.data
           .map((c: any) => ({
-            name: c.name.common,
-            code: c.idd?.root + (c.idd?.suffixes?.[0] || ""),
+            name: c.name,
+            code: c.dial_code,
           }))
           .filter((c: { code: string }) => c.code);
-        setCountryCodes(countries.sort((a: { name: string; }, b: { name: any; }) => a.name.localeCompare(b.name)));
+        setCountryCodes(
+          countries.sort((a: { name: string }, b: { name: string }) =>
+            a.name.localeCompare(b.name)
+          )
+        );
       })
       .catch(console.error);
   }, []);
 
+         
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isSubmitting || !selectedService) return;
