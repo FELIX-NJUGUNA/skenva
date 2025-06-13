@@ -7,6 +7,7 @@ import company3Logo from "../assets/images/logo2.webp";
 import company4Logo from "../assets/images/image.webp"; 
 import company5logo from "../assets/images/vba.webp";
 import company6Logo from "../assets/images/stkvti.webp";
+import company7Logo from "../assets/images/vault.webp"; // Placeholder for additional logo
 
 // FLOATING BLOB EFFECT
 const AnimatedBlob = styled.div`
@@ -212,7 +213,8 @@ const companies = [
   { logo: company3Logo, name: "Skenva Creatives" },
   { logo: company4Logo, name: "Idyllic Living" },
   { logo: company5logo, name: "Valuable Brands" },
-  { logo: company6Logo, name: "St kizito VTI" }, 
+  { logo: company6Logo, name: "St kizito VTI" },
+  { logo: company7Logo, name: "Vault Retro" }, // Placeholder for additional logo 
 ];
 
 const Partners: React.FC = () => {

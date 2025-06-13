@@ -2,6 +2,7 @@
   import styled from "styled-components";
   import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
   import {
+    faTiktok,
     faFacebook,
     faXTwitter,
     faInstagram,
@@ -229,6 +230,10 @@
                   <SocialLinks>
                     <SocialIcon href="https://wa.me/254741553806" target="_blank" whileHover={{ scale: 1.2, y: -3 }}>
                       <FontAwesomeIcon icon={faWhatsapp} />
+                    </SocialIcon>
+
+                    <SocialIcon href="https://www.tiktok.com/search?q=skenva_creatives&t=1749823711333" target="_blank" whileHover={{ scale: 1.2, y: -3 }}>
+                      <FontAwesomeIcon icon={faTiktok} />
                     </SocialIcon>
                     
                     <SocialIcon href="https://www.facebook.com/share/19R96edYQy/" target="_blank" whileHover={{ scale: 1.2, y: -3 }}>

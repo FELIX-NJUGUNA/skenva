@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import {
   faFacebook,
+  faTiktok,
   faXTwitter,
   faInstagram,
   faLinkedin,
@@ -325,6 +326,9 @@ const Hero: React.FC = () => {
         <SocialIcons>
           <a href="https://wa.me/254741553806" target="_blank" aria-label="WhatsApp" rel="noopener noreferrer">
             <FontAwesomeIcon icon={faWhatsapp} />
+          </a>
+          <a href="https://www.tiktok.com/search?q=skenva_creatives&t=1749823711333" target="_blank" aria-label="Facebook" rel="noopener noreferrer">
+            <FontAwesomeIcon icon={faTiktok} />
           </a>
           <a href="https://www.facebook.com/share/19R96edYQy/" target="_blank" aria-label="Facebook" rel="noopener noreferrer">
             <FontAwesomeIcon icon={faFacebook} />
