@@ -227,7 +227,9 @@ const Testimonials: React.FC = () => {
             img: review.img, // img can be undefined, TestimonialCard should handle it
             person: review.person, // person can be undefined
           }));
-          setDisplayedTestimonials(validatedReviews);
+          // Combine user reviews with initial testimonials, user reviews first
+          const combinedReviews = [...validatedReviews, ...initialTestimonials];
+          setDisplayedTestimonials(combinedReviews);
         }
       }
     } catch (error) {
