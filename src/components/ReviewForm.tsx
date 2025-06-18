@@ -16,7 +16,8 @@ interface Review {
 }
 
 interface FormState {
-  name: string;
+  yourName: string;
+  companyName?: string;
   review: string;
   rating: number;
 }
@@ -26,10 +27,10 @@ const FormContainer = styled.div`
   max-width: 500px;
   margin: 2rem auto; // Center the form on the page
   padding: 2rem;
-  border: 1px solid #ccc; // Using a light grey border
-  border-radius: 8px;
-  background-color: ${colors.lightGrey}; // Using lightGrey from palette
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+  border: 1px solid ${colors.lightBlue};
+  border-radius: 15px;
+  background-color: ${colors.white};
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   color: ${colors.darkGrey};
 
   h2 {
@@ -58,61 +59,93 @@ const FormGroup = styled.div`
   }
 
   input[type='text'],
-  textarea {
+  textarea,
+  input[type='range'] { // Apply common styles to range input as well where appropriate
     width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 0.75rem;
+    border: 1px solid ${colors.lightBlue};
+    border-radius: 8px;
     box-sizing: border-box;
+    background-color: ${colors.white}; // Ensure inputs have a background
+    color: ${colors.darkGrey}; // Text color for inputs
+    margin-top: 0.25rem; // Add a little space above the input if label is multiline
   }
 
   textarea {
     min-height: 100px;
     resize: vertical;
   }
+
+  input[type='range'] {
+    padding: 0; // Range inputs often don't need vertical padding
+    -webkit-appearance: none; // Override default appearance
+    appearance: none;
+    height: 8px; // Track height
+    background: ${colors.lightBlue}; // Track color
+    outline: none;
+    opacity: 0.9;
+    transition: opacity .2s;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: ${colors.limeGreen};
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    &::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: ${colors.limeGreen};
+      border-radius: 50%;
+      cursor: pointer;
+      border: none; // Remove default border in Firefox
+    }
+  }
+
+  label { // Ensure label color is consistent
+    color: ${colors.darkGrey};
+    font-weight: 600; // Make labels a bit more prominent
+  }
 `;
 
-const RatingGroup = styled.div`
-  margin-bottom: 1rem;
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-  }
-  div {
-    display: flex;
-    align-items: center;
-  }
-  input[type='radio'] {
-    margin-right: 0.25rem;
-  }
-  span {
-    margin-right: 0.75rem;
-  }
-`;
+// RatingGroup styled component is removed
 
 const SubmitButton = styled.button`
   display: block;
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.75rem 1.5rem; // Adjusted padding
   border: none;
-  border-radius: 4px;
-  background-color: ${colors.royalBlue}; // Use color from palette
+  border-radius: 8px; // Match inputs
+  background-color: ${colors.limeGreen}; // Primary action color
   color: ${colors.white};
   font-size: 1rem;
+  font-weight: 600; // Make text bolder
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease;
 
   &:hover {
-    background-color: ${colors.darkBlue}; // Darken on hover
+    background-color: #2aa42a; // Darker lime green
+    transform: translateY(-2px); // Subtle lift
+  }
+  &:active {
+    transform: translateY(0);
   }
 `;
 
 const ReviewForm: React.FC<ReviewFormProps> = (/* { isOpen, onClose } */) => { // Props removed
   const [formState, setFormState] = useState<FormState>({
-    name: '',
+    yourName: '',
+    companyName: '',
     review: '',
-    rating: 0,
+    rating: 3, // Default rating set to 3
   });
 
   const handleChange = (
@@ -121,25 +154,21 @@ const ReviewForm: React.FC<ReviewFormProps> = (/* { isOpen, onClose } */) => { /
     const { name, value } = e.target;
     setFormState(prevState => ({
       ...prevState,
-      [name]: value,
+      [name]: name === 'rating' ? parseInt(value, 10) : value, // Parse rating to int
     }));
   };
 
-  const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState(prevState => ({
-      ...prevState,
-      rating: parseInt(e.target.value, 10),
-    }));
-  };
+  // handleRatingChange function is removed
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const newReview: Review = {
-      name: formState.name,
+      name: formState.yourName, // Map yourName to name
       quote: formState.review,
       rating: formState.rating,
       img: placeholderImage, // Using imported placeholder image
+      person: formState.companyName, // Map companyName to person
     };
 
     try {
@@ -156,7 +185,8 @@ const ReviewForm: React.FC<ReviewFormProps> = (/* { isOpen, onClose } */) => { /
       }
 
       console.log('Review saved successfully!', newReview);
-      setFormState({ name: '', review: '', rating: 0 }); // Reset form
+      // Reset form to initial state for all new fields
+      setFormState({ yourName: '', companyName: '', review: '', rating: 3 }); // Reset rating to default 3
       // onClose(); // Removed call to onClose
     } catch (error) {
       console.error('Failed to save review to localStorage:', error);
@@ -171,14 +201,24 @@ const ReviewForm: React.FC<ReviewFormProps> = (/* { isOpen, onClose } */) => { /
       <form onSubmit={handleSubmit}>
         <h2>Leave a Review</h2>
         <FormGroup>
-          <label htmlFor="name">Name</label>
+          <label htmlFor="yourName">Your Name</label>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={formState.name}
+            id="yourName"
+            name="yourName"
+            value={formState.yourName}
             onChange={handleChange}
             required
+          />
+        </FormGroup>
+        <FormGroup>
+          <label htmlFor="companyName">Company Name (Optional)</label>
+          <input
+            type="text"
+            id="companyName"
+            name="companyName"
+            value={formState.companyName || ''} // Ensure value is not undefined
+            onChange={handleChange}
           />
         </FormGroup>
         <FormGroup>
@@ -191,30 +231,18 @@ const ReviewForm: React.FC<ReviewFormProps> = (/* { isOpen, onClose } */) => { /
             required
           />
         </FormGroup>
-        <RatingGroup>
-          <label>Rating</label>
-          <div>
-            {[1, 2, 3, 4, 5].map(star => (
-              <React.Fragment key={star}>
-                <input
-                  type="radio"
-                  id={`star-${star}`}
-                  name="rating"
-                  value={star}
-                  checked={formState.rating === star}
-                  onChange={handleRatingChange}
-                  required
-                />
-                <span
-                  style={{ marginLeft: '0.25rem', marginRight: '0.75rem', cursor: 'pointer' }}
-                  onClick={() => setFormState(prev => ({...prev, rating: star}))}
-                >
-                   {star} star{star > 1 ? 's' : ''}
-                </span>
-              </React.Fragment>
-            ))}
-          </div>
-        </RatingGroup>
+        <FormGroup>
+          <label htmlFor="rating">Rating: {formState.rating} star{formState.rating === 1 ? '' : 's'}</label>
+          <input
+            type="range"
+            id="rating"
+            name="rating"
+            min="1"
+            max="5"
+            value={formState.rating}
+            onChange={handleChange}
+          />
+        </FormGroup>
         <SubmitButton type="submit">Submit Review</SubmitButton>
       </form>
     </FormContainer>

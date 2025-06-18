@@ -202,12 +202,13 @@ const Testimonials: React.FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  // Updated initialTestimonials to align name (person's name) and person (company/role)
   const initialTestimonials: StoredReview[] = [
-    { name: "Idyllic", quote: "SkenVa helped us boost our sales with top-tier SEO!", img: client1, rating: 5, person: "Idyllic Client" },
-    { name: "ArtKings Builders Co", person: "Danson Njoroge Njiiri", quote: "Their web and graphic designs elevated our brand visibility!", img: client2, rating: 4 },
-    { name: "Legacy Pixels", person: "Stephen Wanjohi", quote: "Amazing branding services that transformed our online presence!", img: client3, rating: 5 },
-    { name: "Valuable Brands", person: "Victor Wambani - CEO", quote: "Best service I got out of Skenva which showed huge growth to our company", img: client5, rating: 5 },
-    { name: "St Kizito VTI", person: "Peter Kimani Michuki - Coordinator", quote: "Great photo, video, and marketing work — very professional!", img: client1, rating: 5 }, // Using client1 as in original
+    { name: "Idyllic Client", person: "Idyllic", quote: "SkenVa helped us boost our sales with top-tier SEO!", img: client1, rating: 5 },
+    { name: "Danson Njoroge Njiiri", person: "ArtKings Builders Co", quote: "Their web and graphic designs elevated our brand visibility!", img: client2, rating: 4 },
+    { name: "Stephen Wanjohi", person: "Legacy Pixels", quote: "Amazing branding services that transformed our online presence!", img: client3, rating: 5 },
+    { name: "Victor Wambani - CEO", person: "Valuable Brands", quote: "Best service I got out of Skenva which showed huge growth to our company", img: client5, rating: 5 },
+    { name: "Peter Kimani Michuki - Coordinator", person: "St Kizito VTI", quote: "Great photo, video, and marketing work — very professional!", img: client1, rating: 5 },
   ];
 
   const [displayedTestimonials, setDisplayedTestimonials] = useState<StoredReview[]>(initialTestimonials);
