@@ -6,6 +6,15 @@ import client2 from "../assets/images/artkings_prof.webp";
 import client3 from "../assets/images/lp_profile.webp";
 import client5 from "../assets/images/vb_prof.webp";
 
+// Interface for reviews loaded from localStorage or used as default
+interface StoredReview {
+  name: string;
+  quote: string;
+  rating: number;
+  img?: string;
+  person?: string;
+}
+
 const AnimatedBlob = styled.div`
   position: absolute;
   z-index: 0;
@@ -192,27 +201,68 @@ const PersonName = styled.h4`
 const Testimonials: React.FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const testimonials = [
-    { name: "Idyllic", quote: "SkenVa helped us boost our sales with top-tier SEO!", img: client1, rating: 5 },
+
+  const initialTestimonials: StoredReview[] = [
+    { name: "Idyllic", quote: "SkenVa helped us boost our sales with top-tier SEO!", img: client1, rating: 5, person: "Idyllic Client" },
     { name: "ArtKings Builders Co", person: "Danson Njoroge Njiiri", quote: "Their web and graphic designs elevated our brand visibility!", img: client2, rating: 4 },
-    { name: "Legacy Pixels", person: "Stephen Wanjohi",quote: "Amazing branding services that transformed our online presence!", img: client3, rating: 5 },
+    { name: "Legacy Pixels", person: "Stephen Wanjohi", quote: "Amazing branding services that transformed our online presence!", img: client3, rating: 5 },
     { name: "Valuable Brands", person: "Victor Wambani - CEO", quote: "Best service I got out of Skenva which showed huge growth to our company", img: client5, rating: 5 },
-    { name: "St Kizito VTI", person: "Peter Kimani Michuki - Coordinator", quote: "Great photo, video, and marketing work — very professional!", img: client1, rating: 5 },
+    { name: "St Kizito VTI", person: "Peter Kimani Michuki - Coordinator", quote: "Great photo, video, and marketing work — very professional!", img: client1, rating: 5 }, // Using client1 as in original
   ];
-  
+
+  const [displayedTestimonials, setDisplayedTestimonials] = useState<StoredReview[]>(initialTestimonials);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (wrapperRef.current) {
-        const newIndex = (activeIndex + 1) % testimonials.length;
-        const scrollAmount = wrapperRef.current.offsetWidth * 0.8; // ~80% of container
-        wrapperRef.current.scrollTo({ left: newIndex * scrollAmount, behavior: "smooth" });
-        setActiveIndex(newIndex);
+    try {
+      const storedReviewsRaw = localStorage.getItem("userReviews");
+      if (storedReviewsRaw) {
+        const parsedReviews = JSON.parse(storedReviewsRaw);
+        if (Array.isArray(parsedReviews) && parsedReviews.length > 0) {
+          // Ensure all reviews have the necessary fields, providing defaults if needed
+          const validatedReviews: StoredReview[] = parsedReviews.map(review => ({
+            name: review.name || "Anonymous",
+            quote: review.quote || "No comment.",
+            rating: review.rating || 0,
+            img: review.img, // img can be undefined, TestimonialCard should handle it
+            person: review.person, // person can be undefined
+          }));
+          setDisplayedTestimonials(validatedReviews);
+        }
       }
+    } catch (error) {
+      console.error("Failed to load or parse reviews from localStorage:", error);
+      // Defaults to initialTestimonials if localStorage is empty or parsing fails
+    }
+  }, []); // Empty dependency array ensures this runs only once on mount
+
+  useEffect(() => {
+    // Ensure displayedTestimonials is not null and has items before setting up the interval
+    if (!displayedTestimonials || displayedTestimonials.length === 0) return;
+
+    const interval = setInterval(() => {
+      setActiveIndex(prevIndex => {
+        const newIndex = (prevIndex + 1) % displayedTestimonials.length;
+        if (wrapperRef.current && wrapperRef.current.children[newIndex]) {
+          const cardElement = wrapperRef.current.children[newIndex] as HTMLElement;
+          // Calculate scroll position based on the specific card's offsetLeft
+          const scrollPosition = cardElement.offsetLeft - (wrapperRef.current.offsetLeft || 0);
+          wrapperRef.current.scrollTo({ left: scrollPosition, behavior: "smooth" });
+        }
+        return newIndex;
+      });
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [activeIndex, testimonials.length]);
+  }, [displayedTestimonials]); // Re-run effect if displayedTestimonials array changes
+
+  const handleDotClick = (idx: number) => {
+    setActiveIndex(idx);
+    if (wrapperRef.current && wrapperRef.current.children[idx]) {
+      const cardElement = wrapperRef.current.children[idx] as HTMLElement;
+      const scrollPosition = cardElement.offsetLeft - (wrapperRef.current.offsetLeft || 0);
+      wrapperRef.current.scrollTo({ left: scrollPosition, behavior: "smooth" });
+    }
+  };
 
   const renderStars = (rating: number) => (
     <StarWrapper>
@@ -254,30 +304,24 @@ const Testimonials: React.FC = () => {
 
       <Title>What Our Clients Say</Title>
       <TestimonialWrapper ref={wrapperRef}>
-        {testimonials.map((t, index) => (
+        {displayedTestimonials.map((t, index) => (
           <TestimonialCard key={index} alternate={index % 2 === 0}>
               <ClientInfo>
-                <Image src={t.img} alt={t.name} />
+                <Image src={t.img || client1} alt={t.name} /> {/* Fallback image if t.img is undefined */}
                 <Name>{t.name}</Name>
               </ClientInfo>
               {renderStars(t.rating)}
               <Quote>"{t.quote}"</Quote>
-              <PersonName>- {t.person}</PersonName>
+              {t.person && <PersonName>- {t.person}</PersonName>} {/* Conditionally render PersonName */}
             </TestimonialCard>
         ))}
       </TestimonialWrapper>
       <Dots>
-        {testimonials.map((_, idx) => (
+        {displayedTestimonials.map((_, idx) => (
           <Dot
             key={idx}
             active={idx === activeIndex}
-            onClick={() => {
-              if (wrapperRef.current) {
-                const scrollAmount = wrapperRef.current.offsetWidth * 0.8;
-                wrapperRef.current.scrollTo({ left: idx * scrollAmount, behavior: "smooth" });
-                setActiveIndex(idx);
-              }
-            }}
+            onClick={() => handleDotClick(idx)}
           />
         ))}
       </Dots>
