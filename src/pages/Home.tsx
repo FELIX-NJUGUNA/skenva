@@ -11,6 +11,7 @@ import { FaArrowUp } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
 import FAQ from "../components/Faq";
 import Partners from "../components/Partners";
+import ReviewForm from "../components/ReviewForm"; // ReviewForm is already imported
 
 interface ButtonProps {
   showButton: boolean;
@@ -83,9 +84,11 @@ const WhatsAppButton = styled.a<ButtonProps>`
   }
 `;
 
+// AddReviewButton styled component is removed
 
 const Home: React.FC = () => {
   const [showButton, setShowButton] = useState(false);
+  // isReviewModalOpen state is removed
 
   useEffect(() => {
     const handleScroll = () => {
@@ -124,9 +127,16 @@ const Home: React.FC = () => {
         <Testimonials />
       </AnimatedSection>
 
+      {/* Re-embed ReviewForm as a static section */}
+      <AnimatedSection id="review-form">
+        <ReviewForm />
+      </AnimatedSection>
+
       <AnimatedSection id="faq">
         <FAQ />
       </AnimatedSection>
+
+      {/* Modal trigger button and conditional modal rendering are removed */}
 
       <WhatsAppButton
           href="https://wa.me/254741553806" 
@@ -143,7 +153,6 @@ const Home: React.FC = () => {
         <FaArrowUp /> {/* Display only the arrow icon */}
       </BackToTopButton>
       )}
-
     </>
   );
 };
